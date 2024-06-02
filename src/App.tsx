@@ -5,7 +5,7 @@ import './styles/style.css';
 function App() {
     return (
         <div className="flex gap-x-4">
-            <div className="w-50v h-50v">
+            <div className="h-50v w-50v">
                 <MapLayout></MapLayout>
             </div>
 
