@@ -1,11 +1,15 @@
-import {YMap, YMapDefaultSchemeLayer} from './lib/ymaps';
+import MapLayout from './components/MapLayout';
+
+import './styles/style.css';
 
 function App() {
     return (
-        <div style={{width: '100vw', height: '100vh'}}>
-            <YMap location={{center: [37, 55], zoom: 9}}>
-                <YMapDefaultSchemeLayer />
-            </YMap>
+        <div className="flex gap-x-4">
+            <div className="w-50v h-50v">
+                <MapLayout></MapLayout>
+            </div>
+
+            <div>OOOPS</div>
         </div>
     );
 }
