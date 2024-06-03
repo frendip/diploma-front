@@ -4,12 +4,18 @@
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
 
+:root {
+    --wrapper-padding: 15px;
+}
+
 html,
 body {
     height: 100%;
     overflow: hidden;
     font-family: 'Roboto', sans-serif;
     background: #141414 no-repeat fixed;
+
+    padding: var(--wrapper-padding);
 }
 #root {
     min-height: 100%;

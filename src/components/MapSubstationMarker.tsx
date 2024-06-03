@@ -7,7 +7,7 @@ interface MapSubstationMarkerProps extends YMapMarkerProps {
     status?: 'working';
 }
 
-const objectStatus = {
+const statusOption = {
     working: 'border-[#5DE763]'
 };
 
@@ -15,7 +15,7 @@ function MapSubstationMarker({status = 'working', ...markerProps}: MapSubstation
     return (
         <YMapMarker {...markerProps}>
             <div
-                className={`relative flex -translate-x-2/4 -translate-y-2/4 items-center justify-center rounded-full border-4 ${objectStatus[status]} bg-yellow-200 p-1`}
+                className={`relative flex -translate-x-2/4 -translate-y-2/4 items-center justify-center rounded-full border-4 ${statusOption[status]} bg-yellow-200 p-1`}
             >
                 <SubstationIcon />
             </div>
