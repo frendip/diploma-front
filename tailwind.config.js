@@ -13,8 +13,7 @@ module.exports = {
                 '70v': '70vh',
                 '80v': '80vh',
                 '90v': '90vh',
-                '100v': '100vh',
-                '100v-without-wrapper': 'calc(100vh - var(--wrapper-padding) * 4)'
+                '100v': '100vh'
             },
             width: {
                 '10v': '10vw',
