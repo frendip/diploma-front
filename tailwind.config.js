@@ -3,6 +3,9 @@ module.exports = {
     content: ['./src/**/*.{js,jsx,ts,tsx}'],
     theme: {
         extend: {
+            inset: {
+                'navbar-width': 'var(--navbar-width)'
+            },
             height: {
                 '10v': '10vh',
                 '20v': '20vh',
@@ -25,7 +28,8 @@ module.exports = {
                 '70v': '70vw',
                 '80v': '80vw',
                 '90v': '90vw',
-                '100v': '100vw'
+                '100v': '100vw',
+                'navbar-width': 'var(--navbar-width)'
             }
         }
     },

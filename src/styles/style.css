@@ -4,6 +4,10 @@
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500);
 
+:root {
+    --navbar-width: 80px;
+}
+
 html,
 body {
     height: 100%;
