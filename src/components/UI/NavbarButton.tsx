@@ -9,7 +9,7 @@ function NavbarButton({IconComponent, isActive = false, ...buttonProps}: NavbarB
     const activeStyle = useMemo(() => (isActive ? 'bg-active shadow-active' : 'hover:bg-hover-active'), [isActive]);
 
     return (
-        <button {...buttonProps} className={`${activeStyle} rounded-lg p-3 shadow`}>
+        <button {...buttonProps} className={`${activeStyle} rounded-lg p-3 shadow duration-100`}>
             <IconComponent />
         </button>
     );

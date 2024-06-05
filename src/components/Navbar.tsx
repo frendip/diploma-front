@@ -12,7 +12,7 @@ function Navbar() {
     const {pathname} = useLocation();
 
     return (
-        <div className="w-navbar-width absolute bottom-0 left-0 top-0 flex flex-col items-center border-r border-l-neutral-400">
+        <div className="w-navbar absolute bottom-0 left-0 top-0 flex flex-col items-center border-r border-l-neutral-400">
             <div className="mb-20 mt-4">
                 <LogoIcon />
             </div>

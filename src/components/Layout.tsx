@@ -6,7 +6,7 @@ function Layout() {
     return (
         <>
             <Navbar />
-            <div className="left-navbar-width absolute bottom-0 right-0 top-0">
+            <div className="left-navbar absolute bottom-0 right-0 top-0">
                 <Outlet />
             </div>
         </>
