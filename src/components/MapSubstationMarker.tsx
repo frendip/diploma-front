@@ -1,22 +1,24 @@
 import type {YMapMarkerProps} from '../lib/ymaps';
 import {YMapMarker} from '../lib/ymaps';
-import {ReactComponent as SubstationIcon} from '../assets/substation-icon.svg';
-import React from 'react';
+import {ReactComponent as SubstationBlue} from '../assets/substation-marker-blue.svg';
+import {ReactComponent as SubstationRed} from '../assets/substation-marker-red.svg';
+import React, {useMemo} from 'react';
 
 interface MapSubstationMarkerProps extends YMapMarkerProps {
-    status?: 'working';
+    color: 'red' | 'blue';
 }
 
-const statusOption = {
-    working: 'border-[#5DE763]'
+const substationColorOption = {
+    red: SubstationRed,
+    blue: SubstationBlue
 };
 
-function MapSubstationMarker({status = 'working', ...markerProps}: MapSubstationMarkerProps) {
+function MapSubstationMarker({color, ...markerProps}: MapSubstationMarkerProps) {
+    const SubstationIcon = useMemo(() => substationColorOption[color], [color]);
+
     return (
         <YMapMarker {...markerProps}>
-            <div
-                className={`relative flex -translate-x-2/4 -translate-y-2/4 items-center justify-center rounded-full border-4 ${statusOption[status]} bg-yellow-200 p-1`}
-            >
+            <div className={`relative -translate-x-2/4 -translate-y-full`}>
                 <SubstationIcon />
             </div>
         </YMapMarker>
