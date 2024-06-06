@@ -16,7 +16,7 @@ function Route({router, driverCoordinates}: RouteProps) {
         return {
             remaining: {
                 geometry: getFeatureGeometry(getFeatureCoordinates(router.points, nearIndexToDriver, true)),
-                style: getFeatureStyle('#83C753')
+                style: getFeatureStyle('#5932EA')
             },
             past: {
                 geometry: getFeatureGeometry(getFeatureCoordinates(router.points, nearIndexToDriver)),

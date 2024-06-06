@@ -59,7 +59,7 @@ export function getFeatureStyle(color: string): DrawingStyle {
         stroke: [
             {
                 color,
-                width: 8,
+                width: 5,
                 opacity: 0.8
             }
         ],
