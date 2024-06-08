@@ -7,6 +7,7 @@
 :root {
     --navbar-width: 80px;
     --routes-panel-width: 400px;
+    --substations-panel-height: 370px;
 }
 
 html,

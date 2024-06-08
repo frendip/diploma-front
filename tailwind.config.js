@@ -13,6 +13,9 @@ module.exports = {
             width: {
                 navbar: 'var(--navbar-width)',
                 'routes-panel': 'var(--routes-panel-width)'
+            },
+            height: {
+                'substations-panel': 'var(--substations-panel-height)'
             }
         }
     },
