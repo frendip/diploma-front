@@ -1,13 +1,13 @@
 import React from 'react';
-import {ReactComponent as TruckImage} from '../assets/truckImage.svg';
-import {ReactComponent as SubstationBlueIcon} from '../assets/substation-blue-icon.svg';
-import {ReactComponent as SubstationRedIcon} from '../assets/substation-red-icon.svg';
-import {ReactComponent as PhoneIcon} from '../assets/phone-icon.svg';
-import {ReactComponent as MessageIcon} from '../assets/message-icon.svg';
-import driverImage from '../assets/driver-face.jpg';
-import IconButton from './UI/IconButton';
+import {ReactComponent as TruckImage} from '../../assets/truckImage.svg';
+import {ReactComponent as SubstationBlueIcon} from '../../assets/substation-blue-icon.svg';
+import {ReactComponent as SubstationRedIcon} from '../../assets/substation-red-icon.svg';
+import {ReactComponent as PhoneIcon} from '../../assets/phone-icon.svg';
+import {ReactComponent as MessageIcon} from '../../assets/message-icon.svg';
+import driverImage from '../../assets/driver-face.jpg';
+import IconButton from '../UI/IconButton';
 
-function DriversRoutesItem() {
+function Item() {
     return (
         <div className="flex flex-col rounded-lg bg-white px-3 py-5 shadow">
             <div className="flex justify-between">
@@ -57,4 +57,4 @@ function DriversRoutesItem() {
     );
 }
 
-export default DriversRoutesItem;
+export default Item;

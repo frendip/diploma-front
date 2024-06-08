@@ -1,15 +1,15 @@
 import React, {useState, useEffect} from 'react';
-import MapLayout from './MapLayout';
-import {useLazyGetRouterQuery} from '../api/RouterService';
-import type {RouterData} from '../types/map.types';
-import MapSubstationMarker from './MapSubstationMarker';
-import Route from './Route/Route';
+import MapLayout from '../MapLayout';
+import {useLazyGetRouterQuery} from '../../api/RouterService';
+import type {RouterData} from '../../types/map.types';
+import MapSubstationMarker from '../MapSubstationMarker';
+import Route from '../Route/Route';
 
-interface DriversRoutesMapProps {
+interface MapProps {
     className?: string;
 }
 
-function DriversRoutesMap({className: externalStyles}: DriversRoutesMapProps) {
+function Map({className: externalStyles}: MapProps) {
     const [router, setRouter] = useState<RouterData | null>(null);
 
     const [getRouter] = useLazyGetRouterQuery();
@@ -39,4 +39,4 @@ function DriversRoutesMap({className: externalStyles}: DriversRoutesMapProps) {
     );
 }
 
-export default DriversRoutesMap;
+export default Map;

@@ -1,18 +1,18 @@
 import React from 'react';
-import DriversRoutesItem from './DriversRoutesItem';
+import Item from './Item';
 
-interface DriversRoutesListProps {
+interface ListProps {
     className?: string;
 }
 
-function DriversRoutesList({className: externalStyles}: DriversRoutesListProps) {
+function List({className: externalStyles}: ListProps) {
     return (
         <div className={`${externalStyles} flex flex-col gap-y-4 overflow-auto bg-white/85 px-4 py-9`}>
             {[...new Array(10)].map((_, index) => (
-                <DriversRoutesItem key={index} />
+                <Item key={index} />
             ))}
         </div>
     );
 }
 
-export default DriversRoutesList;
+export default List;

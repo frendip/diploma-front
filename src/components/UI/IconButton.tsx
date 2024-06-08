@@ -27,7 +27,7 @@ function IconButton({
     const activeStyle = useMemo(() => {
         if (isActive) {
             if (variant === 'primary') {
-                return 'bg-active hover:bg-active shadow-active';
+                return 'bg-active shadow-active hover:!bg-active';
             }
         }
     }, [variant, isActive]);
@@ -35,7 +35,7 @@ function IconButton({
     return (
         <button
             {...buttonProps}
-            className={`${variantOption[variant]} ${activeStyle} ${sizeOption[size]} rounded-lg duration-100`}
+            className={`${activeStyle} ${variantOption[variant]} ${sizeOption[size]} rounded-lg duration-100`}
         >
             <IconComponent />
         </button>
