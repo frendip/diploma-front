@@ -10,7 +10,7 @@ interface PanelProps {
 function Panel({className: externalStyles}: PanelProps) {
     return (
         <div className={`${externalStyles} flex flex-col gap-y-4 bg-white/85 pt-2`}>
-            <div className="flex items-center gap-x-10 px-20">
+            <div className="flex items-center gap-x-10 px-14">
                 <Type />
                 <Status />
             </div>
