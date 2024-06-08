@@ -5,7 +5,7 @@ import {ReactComponent as SubstationRedIcon} from '../assets/substation-red-icon
 import {ReactComponent as PhoneIcon} from '../assets/phone-icon.svg';
 import {ReactComponent as MessageIcon} from '../assets/message-icon.svg';
 import driverImage from '../assets/driver-face.jpg';
-import CardButton from './UI/CardButton';
+import IconButton from './UI/IconButton';
 
 function DriversRoutesItem() {
     return (
@@ -49,8 +49,8 @@ function DriversRoutesItem() {
                     <div className="font-medium">Andrey Андрейченко</div>
                 </div>
                 <div className="flex gap-x-2">
-                    <CardButton IconComponent={PhoneIcon} />
-                    <CardButton IconComponent={MessageIcon} />
+                    <IconButton variant="secondary" IconComponent={PhoneIcon} />
+                    <IconButton variant="secondary" IconComponent={MessageIcon} />
                 </div>
             </div>
         </div>

@@ -5,26 +5,28 @@ import {ReactComponent as SubstationChapterIcon} from '../assets/substation-chap
 import {ReactComponent as RoutesChapterIcon} from '../assets/routes-chapter-icon.svg';
 import {ReactComponent as SubstationChapterWhiteIcon} from '../assets/substation-chapter-white-icon.svg';
 import {ReactComponent as RoutesChapterWhiteIcon} from '../assets/routes-chapter-white-icon.svg';
-import NavbarButton from './UI/NavbarButton';
+import IconButton from './UI/IconButton';
 import {useLocation} from 'react-router-dom';
 
 function Navbar() {
     const {pathname} = useLocation();
 
     return (
-        <div className="w-navbar absolute bottom-0 left-0 top-0 flex flex-col items-center border-r border-l-neutral-400">
+        <div className="absolute bottom-0 left-0 top-0 flex w-navbar flex-col items-center border-r border-l-neutral-400">
             <div className="mb-20 mt-4">
                 <LogoIcon />
             </div>
             <div className="flex flex-col gap-y-10">
                 <Link to="/">
-                    <NavbarButton
+                    <IconButton
+                        size="large"
                         isActive={pathname === '/'}
                         IconComponent={pathname === '/' ? SubstationChapterWhiteIcon : SubstationChapterIcon}
                     />
                 </Link>
                 <Link to="/drivers-routes">
-                    <NavbarButton
+                    <IconButton
+                        size="large"
                         isActive={pathname === '/drivers-routes'}
                         IconComponent={pathname === '/drivers-routes' ? RoutesChapterWhiteIcon : RoutesChapterIcon}
                     />

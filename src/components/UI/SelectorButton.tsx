@@ -26,7 +26,7 @@ function SelectorButton({position, text, textColor = 'black', isActive = false, 
         () =>
             isActive
                 ? 'bg-active shadow-active text-white'
-                : 'hover:bg-hover-active outline outline-1 -outline-offset-1 outline-gray-300',
+                : 'bg-white hover:bg-hover-active outline outline-1 -outline-offset-1 outline-gray-300',
         [isActive]
     );
 
