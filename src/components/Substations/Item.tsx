@@ -1,16 +1,17 @@
-import React, {useCallback, useMemo, forwardRef} from 'react';
-import {ReactComponent as SubstationRed} from '../../assets/substation-marker-red.svg';
-import {ReactComponent as SubstationYellow} from '../../assets/substation-marker-yellow.svg';
-import {ReactComponent as SubstationGreen} from '../../assets/substation-marker-green.svg';
+import {forwardRef, useCallback, useMemo} from 'react';
 import {ReactComponent as AddressIcon} from '../../assets/address-icon.svg';
 import {ReactComponent as EnergyIcon} from '../../assets/energy-icon.svg';
+import {ReactComponent as SubstationGreen} from '../../assets/substation-marker-green.svg';
+import {ReactComponent as SubstationRed} from '../../assets/substation-marker-red.svg';
+import {ReactComponent as SubstationYellow} from '../../assets/substation-marker-yellow.svg';
 import {ReactComponent as TransformerIcon} from '../../assets/transformer-icon.svg';
-import CommonButton from '../UI/CommonButton';
-import GeneratorsList from './GeneratorsList';
-import type {Substation} from '../../types/substations.types';
-import {useAppSelector} from '../../hooks/useAppSelector';
 import {useAppDispatch} from '../../hooks/useAppDispatch';
+import {useAppSelector} from '../../hooks/useAppSelector';
 import {setActiveSubstation} from '../../store/slices/substationsFilterSlice';
+import type {Substation} from '../../types/substations.types';
+import CommonButton from '../UI/CommonButton';
+import CarsOnRoadList from './CarsOnRoadList';
+import GeneratorsList from './GeneratorsList';
 
 interface ItemProps {
     substation: Substation;
@@ -82,16 +83,29 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(({substation}, ref) => {
                         <div>2 шт.</div>
                     </div>
                 </div>
-                <div className="self-center">
-                    <CommonButton onClick={() => onClickHandler(substation.substation_id)} text="Вызвать генераторы" />
-                </div>
+                {substation.status === 'disabled' ? (
+                    <div className="self-center">
+                        <CommonButton
+                            onClick={() => onClickHandler(substation.substation_id)}
+                            text="Вызвать генераторы"
+                        />
+                    </div>
+                ) : (
+                    ''
+                )}
             </div>
-            {activeId === substation.substation_id && (
-                <>
-                    <div className="mx-3 h-full border-l-2 border-dashed border-gray-400/50"></div>
-                    <GeneratorsList />
-                </>
-            )}
+            {activeId === substation.substation_id &&
+                (substation.status === 'disabled' ? (
+                    <>
+                        <div className="mx-3 h-full border-l-2 border-dashed border-gray-400/50"></div>
+                        <GeneratorsList />
+                    </>
+                ) : (
+                    <>
+                        <div className="mx-3 h-full border-l-2 border-dashed border-gray-400/50"></div>{' '}
+                        <CarsOnRoadList />
+                    </>
+                ))}
         </div>
     );
 });
