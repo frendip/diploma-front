@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {Transition} from 'react-transition-group';
 import {ReactComponent as SubstationGreen} from '../../assets/substation-marker-green.svg';
 import {ReactComponent as SubstationRed} from '../../assets/substation-marker-red.svg';
 import {ReactComponent as AddressIcon} from '../../assets/address-icon.svg';
@@ -12,14 +11,6 @@ const statusColorOption = {
     active: 'text-green-500',
     disabled: 'text-red-500',
     waiting: 'text-orange-300'
-} as const;
-
-const transitionStyles = {
-    entering: 'w-full transition-width duration-300',
-    entered: 'w-full transition-width duration-300',
-    exiting: 'w-0 transition-width duration-300',
-    exited: 'w-0 transition-width duration-300',
-    unmounted: 'w-0 transition-width duration-300'
 } as const;
 
 function Item() {

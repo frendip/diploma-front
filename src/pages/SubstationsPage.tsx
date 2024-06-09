@@ -1,5 +1,4 @@
 import React from 'react';
-import MapLayout from '../components/MapLayout';
 import Panel from '../components/Substations/Panel';
 import Map from '../components/Substations/Map';
 
