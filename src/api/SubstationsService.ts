@@ -1,5 +1,5 @@
-import {ApiService} from './ApiService';
 import type {BasesResp, Substation, SubstationsResp} from '../types/substations.types';
+import {ApiService} from './ApiService';
 
 export const SubstationsApi = ApiService.injectEndpoints({
     endpoints: (builder) => ({
@@ -14,4 +14,4 @@ export const SubstationsApi = ApiService.injectEndpoints({
     })
 });
 
-export const {useGetSubstationsQuery} = SubstationsApi;
+export const {useGetSubstationsQuery, useGetBasesQuery} = SubstationsApi;

@@ -20,12 +20,12 @@ function CarsOnRoadItem({car}: CarsOnRoadItemProps) {
             </div>
             <div className="flex justify-between">
                 <div>Мощность:</div>
-                <div>{car.generator_power}кВт</div>
+                <div>{car.generator_power} кВт</div>
             </div>
             {car.status === 'delivered' && (
                 <div className="flex justify-between">
                     <div>Оставшееся время в пути:</div>
-                    <div>30 min</div>
+                    <div>30 мин</div>
                 </div>
             )}
 
