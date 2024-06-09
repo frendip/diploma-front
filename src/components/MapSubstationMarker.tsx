@@ -2,15 +2,19 @@ import type {YMapMarkerProps} from '../lib/ymaps';
 import {YMapMarker} from '../lib/ymaps';
 import {ReactComponent as SubstationBlue} from '../assets/substation-marker-blue.svg';
 import {ReactComponent as SubstationRed} from '../assets/substation-marker-red.svg';
+import {ReactComponent as SubstationYellow} from '../assets/substation-marker-yellow.svg';
+import {ReactComponent as SubstationGreen} from '../assets/substation-marker-green.svg';
 import React, {useMemo} from 'react';
 
 interface MapSubstationMarkerProps extends YMapMarkerProps {
-    color: 'red' | 'blue';
+    color: keyof typeof substationColorOption;
 }
 
 const substationColorOption = {
     red: SubstationRed,
-    blue: SubstationBlue
+    blue: SubstationBlue,
+    yellow: SubstationYellow,
+    green: SubstationGreen
 };
 
 function MapSubstationMarker({color, ...markerProps}: MapSubstationMarkerProps) {
