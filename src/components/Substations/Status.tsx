@@ -1,13 +1,50 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import SelectorButton from '../UI/SelectorButton';
+import {Substation} from '../../types/substations.types';
+import {useAppDispatch} from '../../hooks/useAppDispatch';
+import {useAppSelector} from '../../hooks/useAppSelector';
+import {setSubstationsStatus} from '../../store/slices/substationsFilterSlice';
 
 function Status() {
+    const dispatch = useAppDispatch();
+    const status = useAppSelector((state) => state.substationsFilterSlice.status);
+
+    const onClickHandler = useCallback(
+        (status: Substation['status'] | 'all') => {
+            dispatch(setSubstationsStatus({status}));
+        },
+        [dispatch]
+    );
+
     return (
         <div>
-            <SelectorButton position="left" text="Все" isActive />
-            <SelectorButton position="center" text="Рабочие" textColor="green" />
-            <SelectorButton position="center" text="Сломанные" textColor="red" />
-            <SelectorButton position="right" text="Ожидающие" textColor="orange" />
+            <SelectorButton
+                position="left"
+                text="Все"
+                isActive={status === 'all'}
+                onClick={() => onClickHandler('all')}
+            />
+            <SelectorButton
+                position="center"
+                text="Рабочие"
+                textColor="green"
+                isActive={status === 'active'}
+                onClick={() => onClickHandler('active')}
+            />
+            <SelectorButton
+                position="center"
+                text="Сломанные"
+                textColor="red"
+                isActive={status === 'disabled'}
+                onClick={() => onClickHandler('disabled')}
+            />
+            <SelectorButton
+                position="right"
+                text="Ожидающие"
+                textColor="orange"
+                isActive={status === 'waiting'}
+                onClick={() => onClickHandler('waiting')}
+            />
         </div>
     );
 }

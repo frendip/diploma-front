@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
-import {ReactComponent as SubstationGreen} from '../../assets/substation-marker-green.svg';
+import React, {useState, useMemo} from 'react';
 import {ReactComponent as SubstationRed} from '../../assets/substation-marker-red.svg';
+import {ReactComponent as SubstationYellow} from '../../assets/substation-marker-yellow.svg';
+import {ReactComponent as SubstationGreen} from '../../assets/substation-marker-green.svg';
 import {ReactComponent as AddressIcon} from '../../assets/address-icon.svg';
 import {ReactComponent as EnergyIcon} from '../../assets/energy-icon.svg';
 import {ReactComponent as TransformerIcon} from '../../assets/transformer-icon.svg';
@@ -11,6 +12,12 @@ import type {Substation} from '../../types/substations.types';
 interface ItemProps {
     substation: Substation;
 }
+
+const substationIconOption = {
+    active: SubstationGreen,
+    disabled: SubstationRed,
+    waiting: SubstationYellow
+};
 
 const statusColorOption = {
     active: 'text-green-500',
@@ -27,12 +34,14 @@ const translateOption = {
 function Item({substation}: ItemProps) {
     const [isOpen, setIsOpen] = useState(false);
 
+    const SubstationIcon = useMemo(() => substationIconOption[substation.status], [substation]);
+
     return (
         <div className="flex h-72 rounded-lg bg-white p-3 shadow">
             <div className="flex w-56 min-w-56 flex-col">
                 <div className="mb-4 flex gap-x-4">
                     <div className="h-12 w-12 overflow-hidden rounded-full">
-                        <SubstationGreen />
+                        <SubstationIcon />
                     </div>
                     <div>
                         <div className="font-medium">{substation.name}</div>

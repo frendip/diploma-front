@@ -2,6 +2,7 @@ import React from 'react';
 import MapLayout from '../MapLayout';
 import {useGetSubstationsQuery} from '../../api/SubstationsService';
 import MapSubstationMarker from '../MapSubstationMarker';
+import {useAppSelector} from '../../hooks/useAppSelector';
 
 interface MapProps {
     className?: string;
@@ -14,7 +15,8 @@ const markerColorOption = {
 } as const;
 
 function Map({className: externalStyles}: MapProps) {
-    const {data, isLoading} = useGetSubstationsQuery(null);
+    const {status} = useAppSelector((state) => state.substationsFilterSlice);
+    const {data, isLoading} = useGetSubstationsQuery({status});
 
     return (
         <div className={`${externalStyles}`}>

@@ -2,9 +2,11 @@ import React from 'react';
 import Item from './Item';
 import {useGetSubstationsQuery} from '../../api/SubstationsService';
 import SkeletonItem from './SkeletonItem';
+import {useAppSelector} from '../../hooks/useAppSelector';
 
 function List() {
-    const {data, isLoading} = useGetSubstationsQuery(null);
+    const {status} = useAppSelector((state) => state.substationsFilterSlice);
+    const {data, isLoading} = useGetSubstationsQuery({status});
 
     return (
         <div className="flex gap-x-5 overflow-auto px-5 pb-1">
