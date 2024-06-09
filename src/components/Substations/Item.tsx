@@ -1,4 +1,4 @@
-import React, {useState, useMemo} from 'react';
+import React, {useCallback, useMemo, forwardRef} from 'react';
 import {ReactComponent as SubstationRed} from '../../assets/substation-marker-red.svg';
 import {ReactComponent as SubstationYellow} from '../../assets/substation-marker-yellow.svg';
 import {ReactComponent as SubstationGreen} from '../../assets/substation-marker-green.svg';
@@ -8,6 +8,9 @@ import {ReactComponent as TransformerIcon} from '../../assets/transformer-icon.s
 import CommonButton from '../UI/CommonButton';
 import GeneratorsList from './GeneratorsList';
 import type {Substation} from '../../types/substations.types';
+import {useAppSelector} from '../../hooks/useAppSelector';
+import {useAppDispatch} from '../../hooks/useAppDispatch';
+import {setActiveSubstation} from '../../store/slices/substationsFilterSlice';
 
 interface ItemProps {
     substation: Substation;
@@ -31,13 +34,25 @@ const translateOption = {
     waiting: 'Ожидает'
 };
 
-function Item({substation}: ItemProps) {
-    const [isOpen, setIsOpen] = useState(false);
+const Item = forwardRef<HTMLDivElement, ItemProps>(({substation}, ref) => {
+    const dispatch = useAppDispatch();
+
+    const {activeId} = useAppSelector((state) => state.substationsFilterSlice);
+
+    const onClickHandler = useCallback(
+        (substationId: number) => {
+            dispatch(setActiveSubstation(substationId));
+        },
+        [dispatch]
+    );
 
     const SubstationIcon = useMemo(() => substationIconOption[substation.status], [substation]);
 
     return (
-        <div className="flex h-72 rounded-lg bg-white p-3 shadow">
+        <div
+            ref={ref}
+            className={`flex h-72 rounded-lg bg-white p-3 shadow ${activeId === substation.substation_id && 'shadow-active'}`}
+        >
             <div className="flex w-56 min-w-56 flex-col">
                 <div className="mb-4 flex gap-x-4">
                     <div className="h-12 w-12 overflow-hidden rounded-full">
@@ -68,10 +83,10 @@ function Item({substation}: ItemProps) {
                     </div>
                 </div>
                 <div className="self-center">
-                    <CommonButton onClick={() => setIsOpen(!isOpen)} text="Вызвать генераторы" />
+                    <CommonButton onClick={() => onClickHandler(substation.substation_id)} text="Вызвать генераторы" />
                 </div>
             </div>
-            {isOpen && (
+            {activeId === substation.substation_id && (
                 <>
                     <div className="mx-3 h-full border-l-2 border-dashed border-gray-400/50"></div>
                     <GeneratorsList />
@@ -79,6 +94,6 @@ function Item({substation}: ItemProps) {
             )}
         </div>
     );
-}
+});
 
 export default Item;

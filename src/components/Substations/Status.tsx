@@ -5,19 +5,23 @@ import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {useAppSelector} from '../../hooks/useAppSelector';
 import {setSubstationsStatus} from '../../store/slices/substationsFilterSlice';
 
-function Status() {
+interface StatusProps {
+    className?: string;
+}
+
+function Status({className: externalStyles}: StatusProps) {
     const dispatch = useAppDispatch();
     const status = useAppSelector((state) => state.substationsFilterSlice.status);
 
     const onClickHandler = useCallback(
         (status: Substation['status'] | 'all') => {
-            dispatch(setSubstationsStatus({status}));
+            dispatch(setSubstationsStatus(status));
         },
         [dispatch]
     );
 
     return (
-        <div>
+        <div className={`${externalStyles}`}>
             <SelectorButton
                 position="left"
                 text="Все"

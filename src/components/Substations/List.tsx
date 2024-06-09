@@ -1,15 +1,40 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import Item from './Item';
 import {useGetSubstationsQuery} from '../../api/SubstationsService';
 import SkeletonItem from './SkeletonItem';
 import {useAppSelector} from '../../hooks/useAppSelector';
+import {useAppDispatch} from '../../hooks/useAppDispatch';
+import {setActiveSubstation} from '../../store/slices/substationsFilterSlice';
 
 function List() {
-    const {status} = useAppSelector((state) => state.substationsFilterSlice);
+    const dispatch = useAppDispatch();
+
+    const {status, activeId} = useAppSelector((state) => state.substationsFilterSlice);
     const {data, isLoading} = useGetSubstationsQuery({status});
 
+    const itemsRef = useRef<HTMLDivElement[]>([]);
+
+    useEffect(() => {
+        if (activeId && data) {
+            const activeIndex = data.data.findIndex((substation) => substation.substation_id === activeId);
+            itemsRef?.current[activeIndex]?.scrollIntoView({
+                behavior: 'smooth',
+                inline: 'start'
+            });
+        }
+    }, [activeId, data]);
+
+    useEffect(() => {
+        dispatch(setActiveSubstation(0));
+
+        return () => {
+            dispatch(setActiveSubstation(0));
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [status]);
+
     return (
-        <div className="flex gap-x-5 overflow-auto px-5 pb-1">
+        <div className="mx-5 flex gap-x-5 overflow-auto pb-1 pt-px">
             {isLoading ? (
                 <>
                     {[...new Array(5)].map((_, index) => (
@@ -17,7 +42,15 @@ function List() {
                     ))}
                 </>
             ) : (
-                <>{data?.data.map((substation, index) => <Item key={index} substation={substation} />)}</>
+                <>
+                    {data?.data.map((substation, index) => (
+                        <Item
+                            ref={(el: HTMLDivElement) => (itemsRef.current[index] = el)}
+                            key={index}
+                            substation={substation}
+                        />
+                    ))}
+                </>
             )}
         </div>
     );
