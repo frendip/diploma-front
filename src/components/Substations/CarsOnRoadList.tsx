@@ -11,7 +11,7 @@ function CarsOnRoadList() {
                         status: 'delivered',
                         driver_name: '',
                         generator_power: 300,
-                        generator_name: 'Пувел мудень',
+                        generator_name: 'Генератор 1',
                         base_id: 1
                     }}
                 />
@@ -22,7 +22,7 @@ function CarsOnRoadList() {
                         status: 'inWork',
                         driver_name: '',
                         generator_power: 300,
-                        generator_name: 'Пувел лох',
+                        generator_name: 'Генератор 2',
                         base_id: 1
                     }}
                 />

@@ -13,3 +13,11 @@ export interface Substation {
 export interface SubstationsResp extends RawResp {
     data: Substation[];
 }
+
+export interface Base extends Substation {
+    generators_count: number;
+}
+
+export interface BasesResp extends RawResp {
+    data: Base[];
+}

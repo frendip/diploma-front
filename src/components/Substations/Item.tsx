@@ -52,7 +52,8 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(({substation}, ref) => {
     return (
         <div
             ref={ref}
-            className={`flex h-72 rounded-lg bg-white p-3 shadow ${activeId === substation.substation_id && 'shadow-active'}`}
+            onClick={() => onClickHandler(substation.substation_id)}
+            className={`flex h-72 cursor-pointer rounded-lg bg-white p-3 shadow ${activeId === substation.substation_id && 'shadow-active'}`}
         >
             <div className="flex w-56 min-w-56 flex-col">
                 <div className="mb-4 flex gap-x-4">
@@ -83,7 +84,7 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(({substation}, ref) => {
                         <div>2 шт.</div>
                     </div>
                 </div>
-                {substation.status === 'disabled' ? (
+                {/* {substation.status === 'disabled' ? (
                     <div className="self-center">
                         <CommonButton
                             onClick={() => onClickHandler(substation.substation_id)}
@@ -92,7 +93,7 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(({substation}, ref) => {
                     </div>
                 ) : (
                     ''
-                )}
+                )} */}
             </div>
             {activeId === substation.substation_id &&
                 (substation.status === 'disabled' ? (
