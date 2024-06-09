@@ -4,7 +4,7 @@ import type {YMapLocationRequest, YMapProps} from '../lib/ymaps';
 
 export const DEFAULT_LOCATION: YMapLocationRequest = {
     center: [37.623082, 55.75254], // starting position [lng, lat]
-    zoom: 10 // starting zoom,
+    zoom: 11 // starting zoom,
 };
 
 type PartialBy<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
