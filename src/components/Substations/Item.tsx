@@ -6,6 +6,11 @@ import {ReactComponent as EnergyIcon} from '../../assets/energy-icon.svg';
 import {ReactComponent as TransformerIcon} from '../../assets/transformer-icon.svg';
 import CommonButton from '../UI/CommonButton';
 import GeneratorsList from './GeneratorsList';
+import type {Substation} from '../../types/substations.types';
+
+interface ItemProps {
+    substation: Substation;
+}
 
 const statusColorOption = {
     active: 'text-green-500',
@@ -13,7 +18,7 @@ const statusColorOption = {
     waiting: 'text-orange-300'
 } as const;
 
-function Item() {
+function Item({substation}: ItemProps) {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -24,21 +29,21 @@ function Item() {
                         <SubstationGreen />
                     </div>
                     <div>
-                        <div className="font-medium">Подстанция 1</div>
-                        <div className={`${statusColorOption['active']}`}>Рабочий</div>
+                        <div className="font-medium">{substation.name}</div>
+                        <div className={`${statusColorOption['active']}`}>{substation.status}</div>
                     </div>
                 </div>
                 <div className="ml-3 flex flex-1 flex-col gap-y-4">
                     <div className="flex gap-x-3">
                         <AddressIcon />
                         <div>
-                            <div>Тверская улица, 4, Москва, 125009</div>
-                            <div className="text-sm text-gray-500/85">55.758493, 37.613198</div>
+                            <div className="line-clamp-2 h-12">{substation.address}</div>
+                            <div className="text-sm text-gray-500/85">{substation.coordinates.join(', ')}</div>
                         </div>
                     </div>
                     <div className="flex items-center gap-x-3">
                         <EnergyIcon />
-                        <div>330 кВт</div>
+                        <div>{substation.power} кВт</div>
                     </div>
                     <div className="flex items-center gap-x-3">
                         <TransformerIcon />

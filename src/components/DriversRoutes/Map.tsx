@@ -22,7 +22,7 @@ function Map({className: externalStyles}: MapProps) {
                     [37.616791, 55.7406]
                 ]
             }).unwrap();
-            setRouter(data.route);
+            setRouter(data.data);
         };
 
         asyncFetchRoute();

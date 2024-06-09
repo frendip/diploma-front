@@ -7,5 +7,6 @@ export const ApiService = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: BASE_URL
     }),
-    endpoints: () => ({})
+    endpoints: () => ({}),
+    tagTypes: ['Substations']
 });
