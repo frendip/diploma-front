@@ -18,6 +18,12 @@ const statusColorOption = {
     waiting: 'text-orange-300'
 } as const;
 
+const translateOption = {
+    active: 'Рабочий',
+    disabled: 'Сломан',
+    waiting: 'Ожидает'
+};
+
 function Item({substation}: ItemProps) {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -30,7 +36,9 @@ function Item({substation}: ItemProps) {
                     </div>
                     <div>
                         <div className="font-medium">{substation.name}</div>
-                        <div className={`${statusColorOption['active']}`}>{substation.status}</div>
+                        <div className={`${statusColorOption[substation.status]}`}>
+                            {translateOption[substation.status]}
+                        </div>
                     </div>
                 </div>
                 <div className="ml-3 flex flex-1 flex-col gap-y-4">

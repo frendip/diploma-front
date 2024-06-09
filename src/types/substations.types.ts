@@ -5,7 +5,7 @@ export interface Substation {
     substation_id: number;
     coordinates: LngLat;
     address: string;
-    status: string;
+    status: 'active' | 'disabled' | 'waiting';
     name: string;
     power: number;
 }
