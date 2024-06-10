@@ -2,7 +2,6 @@ import {Car} from '../../types/cars.types';
 
 const statusColorOption = {
     onBase: 'text-green-500',
-    broken: 'text-red-500',
     inWork: 'text-orange-300',
     delivered: 'text-indigo-600'
 } as const;

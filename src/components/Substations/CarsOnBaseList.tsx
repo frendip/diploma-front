@@ -30,7 +30,7 @@ function CarsOnBaseList() {
                     car={{
                         car_id: 1,
                         coordinates: [1, 1],
-                        status: 'broken',
+                        status: 'onBase',
                         driver_name: '',
                         generator_power: 300,
                         generator_name: 'Генератор 3',
