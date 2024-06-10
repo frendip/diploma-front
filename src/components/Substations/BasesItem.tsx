@@ -29,7 +29,7 @@ const BasesItem = forwardRef<HTMLDivElement, BaseItemProps>(({base}, ref) => {
         <div
             ref={ref}
             onClick={() => onClickHandler(base.substation_id)}
-            className={`flex h-72 cursor-pointer rounded-lg bg-white p-3 shadow`}
+            className={`flex h-72 cursor-pointer rounded-lg bg-white p-3 shadow ${activeId === base.substation_id && 'shadow-active'}`}
         >
             <div className="flex w-56 min-w-56 flex-col">
                 <div className="mb-4 flex gap-x-4">

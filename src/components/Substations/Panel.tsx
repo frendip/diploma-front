@@ -26,7 +26,12 @@ function Panel({className: externalStyles}: PanelProps) {
                 <Type />
                 {panelActiveType === 'substations' && <Status className="flex-1" />}
 
-                {activeId !== 0 && <CommonButton text="Сбросить выбранную подстанцию" onClick={onClickHandler} />}
+                {activeId !== 0 && (
+                    <CommonButton
+                        text={`Сбросить выбранную ${panelActiveType === 'substations' ? 'подстанцию' : 'базу'}`}
+                        onClick={onClickHandler}
+                    />
+                )}
             </div>
             {panelActiveType === 'substations' ? <List /> : <BasesList />}
         </div>
