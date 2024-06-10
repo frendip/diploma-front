@@ -1,6 +1,5 @@
-import React from 'react';
-import Panel from '../components/Substations/Panel';
 import Map from '../components/Substations/Map';
+import Panel from '../components/Substations/Panel';
 
 function SubstationsPage() {
     return (

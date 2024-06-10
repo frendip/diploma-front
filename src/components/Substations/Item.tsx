@@ -9,7 +9,6 @@ import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {useAppSelector} from '../../hooks/useAppSelector';
 import {setActiveSubstation} from '../../store/slices/substationsFilterSlice';
 import type {Substation} from '../../types/substations.types';
-import CommonButton from '../UI/CommonButton';
 import CarsOnRoadList from './CarsOnRoadList';
 import GeneratorsList from './GeneratorsList';
 
@@ -69,7 +68,9 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(({substation}, ref) => {
                 </div>
                 <div className="ml-3 flex flex-1 flex-col gap-y-4">
                     <div className="flex gap-x-3">
-                        <AddressIcon />
+                        <div className="w-6">
+                            <AddressIcon />
+                        </div>
                         <div>
                             <div className="line-clamp-2 h-12">{substation.address}</div>
                             <div className="text-sm text-gray-500/85">{substation.coordinates.join(', ')}</div>

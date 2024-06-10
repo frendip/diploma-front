@@ -4,7 +4,7 @@ import {RawResp} from './resp.types';
 export interface Car {
     car_id: number;
     coordinates: LngLat;
-    status: 'delivered' | 'inWork' | 'onBase';
+    status: 'delivered' | 'inWork' | 'onBase' | 'broken';
     driver_name: string;
     generator_power: number;
     generator_name: string;

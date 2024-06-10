@@ -7,11 +7,11 @@ const statusColorOption = {
     delivered: 'text-indigo-600'
 } as const;
 
-interface CarsOnRoadItemProps {
+interface CarsOnBaseItemProps {
     car: Car;
 }
 
-function CarsOnRoadItem({car}: CarsOnRoadItemProps) {
+function CarsOnBaseItem({car}: CarsOnBaseItemProps) {
     return (
         <div className="flex w-96 flex-col rounded-lg border border-solid border-active px-4 py-3">
             <div className="flex justify-between">
@@ -38,4 +38,4 @@ function CarsOnRoadItem({car}: CarsOnRoadItemProps) {
     );
 }
 
-export default CarsOnRoadItem;
+export default CarsOnBaseItem;

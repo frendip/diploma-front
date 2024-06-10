@@ -1,26 +1,26 @@
-import {Dispatch, SetStateAction} from 'react';
+import {useAppDispatch} from '../../hooks/useAppDispatch';
+import {useAppSelector} from '../../hooks/useAppSelector';
+import {setPanelActiveType} from '../../store/slices/substationsFilterSlice';
 import SelectorButton from '../UI/SelectorButton';
-import {PanelACtiveType} from './Panel';
 
-interface TypeProps {
-    activeList: string;
-    setActiveList: Dispatch<SetStateAction<PanelACtiveType>>;
-}
+function Type() {
+    const dispatch = useAppDispatch();
 
-function Type({activeList, setActiveList}: TypeProps) {
+    const {panelActiveType} = useAppSelector((state) => state.substationsFilterSlice);
+
     return (
         <div>
             <SelectorButton
                 position="left"
                 text="Все подстанции"
-                isActive={activeList === 'substations'}
-                onClick={() => setActiveList('substations')}
+                isActive={panelActiveType === 'substations'}
+                onClick={() => dispatch(setPanelActiveType('substations'))}
             />
             <SelectorButton
                 position="right"
                 text="Базы"
-                isActive={activeList === 'bases'}
-                onClick={() => setActiveList('bases')}
+                isActive={panelActiveType === 'bases'}
+                onClick={() => dispatch(setPanelActiveType('bases'))}
             />
         </div>
     );

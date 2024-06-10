@@ -1,17 +1,36 @@
+import {forwardRef, useCallback} from 'react';
 import {ReactComponent as AddressIcon} from '../../assets/address-icon.svg';
 import {ReactComponent as EnergyIcon} from '../../assets/energy-icon.svg';
+import {ReactComponent as GeneratorIcon} from '../../assets/generator-icon.svg';
 import {ReactComponent as SubstationBlue} from '../../assets/substation-marker-blue.svg';
-import {ReactComponent as TransformerIcon} from '../../assets/transformer-icon.svg';
+import {useAppDispatch} from '../../hooks/useAppDispatch';
+import {useAppSelector} from '../../hooks/useAppSelector';
 
+import {setActiveSubstation} from '../../store/slices/substationsFilterSlice';
 import {Base} from '../../types/substations.types';
+import CarsOnBaseList from './CarsOnBaseList';
 
 export interface BaseItemProps {
     base: Base;
 }
 
-function BasesItem({base}: BaseItemProps) {
+const BasesItem = forwardRef<HTMLDivElement, BaseItemProps>(({base}, ref) => {
+    const dispatch = useAppDispatch();
+
+    const {activeId} = useAppSelector((state) => state.substationsFilterSlice);
+
+    const onClickHandler = useCallback(
+        (substationId: number) => {
+            dispatch(setActiveSubstation(substationId));
+        },
+        [dispatch]
+    );
     return (
-        <div className={`flex h-72 cursor-pointer rounded-lg bg-white p-3 shadow`}>
+        <div
+            ref={ref}
+            onClick={() => onClickHandler(base.substation_id)}
+            className={`flex h-72 cursor-pointer rounded-lg bg-white p-3 shadow`}
+        >
             <div className="flex w-56 min-w-56 flex-col">
                 <div className="mb-4 flex gap-x-4">
                     <div className="h-12 w-12 overflow-hidden rounded-full">
@@ -19,14 +38,13 @@ function BasesItem({base}: BaseItemProps) {
                     </div>
                     <div>
                         <div className="font-medium">{base.name}</div>
-                        {/* <div className={`${statusColorOption[substation.status]}`}>
-                            {translateOption[substation.status]}
-                        </div> */}
                     </div>
                 </div>
                 <div className="ml-3 flex flex-1 flex-col gap-y-4">
                     <div className="flex gap-x-3">
-                        <AddressIcon />
+                        <div className="w-6">
+                            <AddressIcon />
+                        </div>
                         <div>
                             <div className="line-clamp-2 h-12">{base.address}</div>
                             <div className="text-sm text-gray-500/85">{base.coordinates.join(', ')}</div>
@@ -37,8 +55,8 @@ function BasesItem({base}: BaseItemProps) {
                         <div>{base.power} кВт</div>
                     </div>
                     <div className="flex items-center gap-x-3">
-                        <TransformerIcon />
-                        <div>2 шт.</div>
+                        <GeneratorIcon />
+                        <div>{base.generators_count} шт.</div>
                     </div>
                 </div>
                 {/* {substation.status === 'disabled' ? (
@@ -52,20 +70,15 @@ function BasesItem({base}: BaseItemProps) {
                 ''
             )} */}
             </div>
-            {/* {activeId === substation.substation_id &&
-                (substation.status === 'disabled' ? (
-                    <>
-                        <div className="mx-3 h-full border-l-2 border-dashed border-gray-400/50"></div>
-                        <GeneratorsList />
-                    </>
-                ) : (
-                    <>
-                        <div className="mx-3 h-full border-l-2 border-dashed border-gray-400/50"></div>{' '}
-                        <CarsOnRoadList />
-                    </>
-                ))} */}
+            {activeId === base.substation_id && (
+                <>
+                    {' '}
+                    <div className="mx-3 h-full border-l-2 border-dashed border-gray-400/50"></div>
+                    <CarsOnBaseList />
+                </>
+            )}
         </div>
     );
-}
+});
 
 export default BasesItem;
