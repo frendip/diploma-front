@@ -12,10 +12,12 @@ module.exports = {
             },
             width: {
                 navbar: 'var(--navbar-width)',
-                'routes-panel': 'var(--routes-panel-width)'
+                'routes-panel': 'var(--routes-panel-width)',
+                'add-substation-panel': 'var(--add-substation-panel-width)'
             },
             height: {
-                'substations-panel': 'var(--substations-panel-height)'
+                'substations-panel': 'var(--substations-panel-height)',
+                'add-substation-panel': 'var(--add-substation-panel-height)'
             }
         }
     },
