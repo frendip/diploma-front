@@ -1,3 +1,4 @@
+import {LngLat} from '@yandex/ymaps3';
 import {RawResp} from '../types/resp.types';
 import type {BasesResp, Substation, SubstationResp, SubstationsResp} from '../types/substations.types';
 import {ApiService} from './ApiService';
@@ -23,9 +24,17 @@ export const SubstationsApi = ApiService.injectEndpoints({
                 body: substation
             }),
             invalidatesTags: ['Substations']
+        }),
+        getAddressFromCoordinates: builder.query<any, {coordinates: LngLat}>({
+            query: (params) => ({url: '/geocode', params, method: 'GET'})
         })
     })
 });
 
-export const {useGetSubstationsQuery, useGetBasesQuery, useSetSubstationMutation, useGetSubstationByIdQuery} =
-    SubstationsApi;
+export const {
+    useGetSubstationsQuery,
+    useGetBasesQuery,
+    useSetSubstationMutation,
+    useGetSubstationByIdQuery,
+    useLazyGetAddressFromCoordinatesQuery
+} = SubstationsApi;
