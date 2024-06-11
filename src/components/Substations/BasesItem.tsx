@@ -17,7 +17,7 @@ export interface BaseItemProps {
 const BasesItem = forwardRef<HTMLDivElement, BaseItemProps>(({base}, ref) => {
     const dispatch = useAppDispatch();
 
-    const {activeId} = useAppSelector((state) => state.vinaigretteSlice);
+    const {activeSubstationId} = useAppSelector((state) => state.vinaigretteSlice);
 
     const onClickHandler = useCallback(
         (substationId: number) => {
@@ -29,7 +29,7 @@ const BasesItem = forwardRef<HTMLDivElement, BaseItemProps>(({base}, ref) => {
         <div
             ref={ref}
             onClick={() => onClickHandler(base.substation_id)}
-            className={`flex h-72 cursor-pointer rounded-lg bg-white p-3 shadow ${activeId === base.substation_id && 'shadow-active'}`}
+            className={`flex h-72 cursor-pointer rounded-lg bg-white p-3 shadow ${activeSubstationId === base.substation_id && 'shadow-active'}`}
         >
             <div className="flex w-56 min-w-56 flex-col">
                 <div className="mb-4 flex items-center gap-x-4">
@@ -59,20 +59,9 @@ const BasesItem = forwardRef<HTMLDivElement, BaseItemProps>(({base}, ref) => {
                         <div>{base.generators_count} шт.</div>
                     </div>
                 </div>
-                {/* {substation.status === 'disabled' ? (
-                <div className="self-center">
-                    <CommonButton
-                        onClick={() => onClickHandler(substation.substation_id)}
-                        text="Вызвать генераторы"
-                    />
-                </div>
-            ) : (
-                ''
-            )} */}
             </div>
-            {activeId === base.substation_id && (
+            {activeSubstationId === base.substation_id && (
                 <>
-                    {' '}
                     <div className="mx-3 h-full border-l-2 border-dashed border-gray-400/50"></div>
                     <CarsOnBaseList />
                 </>

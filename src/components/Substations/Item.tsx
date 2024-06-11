@@ -37,7 +37,7 @@ const translateOption = {
 const Item = forwardRef<HTMLDivElement, ItemProps>(({substation}, ref) => {
     const dispatch = useAppDispatch();
 
-    const {activeId} = useAppSelector((state) => state.vinaigretteSlice);
+    const {activeSubstationId} = useAppSelector((state) => state.vinaigretteSlice);
 
     const onClickHandler = useCallback(
         (substationId: number) => {
@@ -52,7 +52,7 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(({substation}, ref) => {
         <div
             ref={ref}
             onClick={() => onClickHandler(substation.substation_id)}
-            className={`flex h-72 cursor-pointer rounded-lg bg-white p-3 shadow ${activeId === substation.substation_id && 'shadow-active'}`}
+            className={`flex h-72 cursor-pointer rounded-lg bg-white p-3 shadow ${activeSubstationId === substation.substation_id && 'shadow-active'}`}
         >
             <div className="flex w-56 min-w-56 flex-col">
                 <div className="mb-4 flex gap-x-4">
@@ -96,7 +96,7 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(({substation}, ref) => {
                     ''
                 )} */}
             </div>
-            {activeId === substation.substation_id &&
+            {activeSubstationId === substation.substation_id &&
                 (substation.status === 'disabled' ? (
                     <>
                         <div className="mx-3 h-full border-l-2 border-dashed border-gray-400/50"></div>

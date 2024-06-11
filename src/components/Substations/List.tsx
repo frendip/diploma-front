@@ -9,20 +9,20 @@ import {setActiveSubstation} from '../../store/slices/vinaigretteSlice';
 function List() {
     const dispatch = useAppDispatch();
 
-    const {status, activeId} = useAppSelector((state) => state.vinaigretteSlice);
+    const {status, activeSubstationId} = useAppSelector((state) => state.vinaigretteSlice);
     const {data, isLoading} = useGetSubstationsQuery({status});
 
     const itemsRef = useRef<HTMLDivElement[]>([]);
 
     useEffect(() => {
-        if (activeId && data) {
-            const activeIndex = data.data.findIndex((substation) => substation.substation_id === activeId);
+        if (activeSubstationId && data) {
+            const activeIndex = data.data.findIndex((substation) => substation.substation_id === activeSubstationId);
             itemsRef?.current[activeIndex]?.scrollIntoView({
                 behavior: 'smooth',
                 inline: 'start'
             });
         }
-    }, [activeId, data]);
+    }, [activeSubstationId, data]);
 
     useEffect(() => {
         dispatch(setActiveSubstation(0));

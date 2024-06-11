@@ -24,7 +24,7 @@ function Map({className: externalStyles}: MapProps) {
 
     const [mapLocation, setMapLocation] = React.useState<YMapProps['location']>(DEFAULT_LOCATION);
 
-    const {status, activeId, panelActiveType} = useAppSelector((state) => state.vinaigretteSlice);
+    const {status, activeSubstationId, panelActiveType} = useAppSelector((state) => state.vinaigretteSlice);
     const {data: substationData, isLoading: substationDataIsLoading} = useGetSubstationsQuery({status});
     const {data: basesData, isLoading: basesDataIsLoading} = useGetBasesQuery(null);
 
@@ -39,9 +39,9 @@ function Map({className: externalStyles}: MapProps) {
         if (panelActiveType === 'substations') {
             if (!substationData) return;
 
-            if (activeId) {
+            if (activeSubstationId) {
                 const activeSubstation = substationData.data.find(
-                    (substation) => substation.substation_id === activeId
+                    (substation) => substation.substation_id === activeSubstationId
                 );
                 if (!activeSubstation) return;
                 setMapLocation({center: activeSubstation.coordinates, zoom: 12, duration: 300});
@@ -51,8 +51,10 @@ function Map({className: externalStyles}: MapProps) {
         } else {
             if (!basesData) return;
 
-            if (activeId) {
-                const activeSubstation = basesData.data.find((substation) => substation.substation_id === activeId);
+            if (activeSubstationId) {
+                const activeSubstation = basesData.data.find(
+                    (substation) => substation.substation_id === activeSubstationId
+                );
                 if (!activeSubstation) return;
                 setMapLocation({center: activeSubstation.coordinates, zoom: 12, duration: 300});
             } else {
@@ -61,7 +63,7 @@ function Map({className: externalStyles}: MapProps) {
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [activeId]);
+    }, [activeSubstationId]);
 
     return (
         <div className={`${externalStyles}`}>
@@ -71,7 +73,7 @@ function Map({className: externalStyles}: MapProps) {
                       substationData?.data.map((substation) => (
                           <MapSubstationMarker
                               key={substation.substation_id}
-                              isActive={substation.substation_id === activeId}
+                              isActive={substation.substation_id === activeSubstationId}
                               color={markerColorOption[substation.status]}
                               coordinates={substation.coordinates}
                               onClick={() => onClickHandler(substation.substation_id)}
@@ -81,7 +83,7 @@ function Map({className: externalStyles}: MapProps) {
                       basesData?.data.map((substation) => (
                           <MapSubstationMarker
                               key={substation.substation_id}
-                              isActive={substation.substation_id === activeId}
+                              isActive={substation.substation_id === activeSubstationId}
                               color={markerColorOption['base']}
                               coordinates={substation.coordinates}
                               onClick={() => onClickHandler(substation.substation_id)}

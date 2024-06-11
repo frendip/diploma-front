@@ -16,7 +16,7 @@ interface PanelProps {
 
 function Panel({className: externalStyles}: PanelProps) {
     const dispatch = useAppDispatch();
-    const {activeId, panelActiveType} = useAppSelector((state) => state.vinaigretteSlice);
+    const {activeSubstationId, panelActiveType} = useAppSelector((state) => state.vinaigretteSlice);
     const [setSubstation] = useSetSubstationMutation(undefined);
 
     const onClickHandler = useCallback(() => {
@@ -35,11 +35,13 @@ function Panel({className: externalStyles}: PanelProps) {
 
     return (
         <div className={`${externalStyles} flex flex-col gap-y-4 bg-white/85 pt-2`}>
-            <div className="flex items-center justify-between gap-x-10 px-14">
-                <Type />
-                {panelActiveType === 'substations' && <Status className="flex-1" />}
+            <div className="flex items-center gap-x-10 px-14">
+                <div className="flex flex-1 gap-x-10">
+                    <Type />
+                    {panelActiveType === 'substations' && <Status className="flex-1" />}
+                </div>
 
-                {activeId !== 0 && (
+                {activeSubstationId !== 0 && (
                     <CommonButton
                         text={`Сбросить выбранную ${panelActiveType === 'substations' ? 'подстанцию' : 'базу'}`}
                         onClick={onClickHandler}
