@@ -1,4 +1,4 @@
-import {CarResp, CarRouteResp, CarsResp} from '../types/cars.types';
+import {CarResp, CarRouteResp, CarsResp, RepairingSubstationResp} from '../types/cars.types';
 import {ApiService} from './ApiService';
 
 export const CarsApi = ApiService.injectEndpoints({
@@ -14,6 +14,10 @@ export const CarsApi = ApiService.injectEndpoints({
         getCarRoute: builder.query<CarRouteResp, number>({
             query: (id) => ({url: `/cars/${id}/route`, method: 'get'}),
             providesTags: ['Cars', 'Substations']
+        }),
+        getCarRepairingSubstation: builder.query<RepairingSubstationResp, number>({
+            query: (id) => ({url: `/cars/${id}/repairing-substation`, method: 'get'}),
+            providesTags: ['Cars', 'Substations']
         })
     })
 });
@@ -22,6 +26,7 @@ export const {
     useGetCarsQuery,
     useGetCarByIdQuery,
     useGetCarRouteQuery,
+    useGetCarRepairingSubstationQuery,
     useLazyGetCarRouteQuery,
     useLazyGetCarByIdQuery
 } = CarsApi;

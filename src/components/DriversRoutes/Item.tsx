@@ -6,7 +6,8 @@ import {ReactComponent as TruckDriverIcon} from '../../assets/truck-driver-icon.
 import IconButton from '../UI/IconButton';
 import {Car} from '../../types/cars.types';
 import TwoAddresses from './TwoAddresses';
-import OneAddress from './OneAddress';
+import StartAddress from './StartAddress';
+import EndAddress from './EndAddress';
 
 interface ItemProps {
     car: Car;
@@ -38,7 +39,13 @@ function Item({car}: ItemProps) {
 
             <div className="my-4 h-px w-full bg-gray-300/50" />
 
-            {car.status === 'onBase' ? <OneAddress substationId={car.base_id} /> : <TwoAddresses carId={car.car_id} />}
+            {car.status === 'onBase' ? (
+                <StartAddress substationId={car.base_id} />
+            ) : car.status === 'inWork' ? (
+                <EndAddress carId={car.car_id} />
+            ) : (
+                <TwoAddresses carId={car.car_id} />
+            )}
 
             <div className="my-4 h-px w-full bg-gray-300/50" />
 

@@ -2,11 +2,11 @@ import React from 'react';
 import {ReactComponent as SubstationBlueIcon} from '../../assets/substation-blue-icon.svg';
 import {useGetSubstationByIdQuery} from '../../api/SubstationsService';
 
-interface OneAddressProps {
+interface StartAddressProps {
     substationId: number;
 }
 
-function OneAddress({substationId}: OneAddressProps) {
+function StartAddress({substationId}: StartAddressProps) {
     const {data, isLoading} = useGetSubstationByIdQuery(substationId);
 
     return (
@@ -23,4 +23,4 @@ function OneAddress({substationId}: OneAddressProps) {
     );
 }
 
-export default OneAddress;
+export default StartAddress;

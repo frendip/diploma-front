@@ -30,3 +30,13 @@ export interface CarRoute {
 export interface CarRouteResp extends RawResp {
     data: CarRoute;
 }
+
+export interface RepairingSubstation {
+    repairing_substation_id: number;
+    car_id: number;
+    substation: Substation;
+}
+
+export interface RepairingSubstationResp extends RawResp {
+    data: RepairingSubstation;
+}
