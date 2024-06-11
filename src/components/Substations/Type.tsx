@@ -1,12 +1,12 @@
 import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {useAppSelector} from '../../hooks/useAppSelector';
-import {setPanelActiveType} from '../../store/slices/substationsFilterSlice';
+import {setPanelActiveType} from '../../store/slices/vinaigretteSlice';
 import SelectorButton from '../UI/SelectorButton';
 
 function Type() {
     const dispatch = useAppDispatch();
 
-    const {panelActiveType} = useAppSelector((state) => state.substationsFilterSlice);
+    const {panelActiveType} = useAppSelector((state) => state.vinaigretteSlice);
 
     return (
         <div>

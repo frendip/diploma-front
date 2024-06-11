@@ -4,12 +4,12 @@ import {useGetSubstationsQuery} from '../../api/SubstationsService';
 import SkeletonItem from './SkeletonItem';
 import {useAppSelector} from '../../hooks/useAppSelector';
 import {useAppDispatch} from '../../hooks/useAppDispatch';
-import {setActiveSubstation} from '../../store/slices/substationsFilterSlice';
+import {setActiveSubstation} from '../../store/slices/vinaigretteSlice';
 
 function List() {
     const dispatch = useAppDispatch();
 
-    const {status, activeId} = useAppSelector((state) => state.substationsFilterSlice);
+    const {status, activeId} = useAppSelector((state) => state.vinaigretteSlice);
     const {data, isLoading} = useGetSubstationsQuery({status});
 
     const itemsRef = useRef<HTMLDivElement[]>([]);

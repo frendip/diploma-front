@@ -1,11 +1,11 @@
 import {configureStore} from '@reduxjs/toolkit';
 import {ApiService} from '../api/ApiService';
-import substationsFilterSlice from './slices/substationsFilterSlice';
+import vinaigretteSlice from './slices/vinaigretteSlice';
 
 const store = configureStore({
     reducer: {
         [ApiService.reducerPath]: ApiService.reducer,
-        substationsFilterSlice: substationsFilterSlice
+        vinaigretteSlice: vinaigretteSlice
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(ApiService.middleware)
 });

@@ -3,7 +3,7 @@ import SelectorButton from '../UI/SelectorButton';
 import {Substation} from '../../types/substations.types';
 import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {useAppSelector} from '../../hooks/useAppSelector';
-import {setSubstationsStatus} from '../../store/slices/substationsFilterSlice';
+import {setSubstationsStatus} from '../../store/slices/vinaigretteSlice';
 
 interface StatusProps {
     className?: string;
@@ -11,7 +11,7 @@ interface StatusProps {
 
 function Status({className: externalStyles}: StatusProps) {
     const dispatch = useAppDispatch();
-    const status = useAppSelector((state) => state.substationsFilterSlice.status);
+    const {status} = useAppSelector((state) => state.vinaigretteSlice);
 
     const onClickHandler = useCallback(
         (status: Substation['status'] | 'all') => {

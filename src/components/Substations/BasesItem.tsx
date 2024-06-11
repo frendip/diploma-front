@@ -6,7 +6,7 @@ import {ReactComponent as SubstationBlue} from '../../assets/substation-marker-b
 import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {useAppSelector} from '../../hooks/useAppSelector';
 
-import {setActiveSubstation} from '../../store/slices/substationsFilterSlice';
+import {setActiveSubstation} from '../../store/slices/vinaigretteSlice';
 import {Base} from '../../types/substations.types';
 import CarsOnBaseList from './CarsOnBaseList';
 
@@ -17,7 +17,7 @@ export interface BaseItemProps {
 const BasesItem = forwardRef<HTMLDivElement, BaseItemProps>(({base}, ref) => {
     const dispatch = useAppDispatch();
 
-    const {activeId} = useAppSelector((state) => state.substationsFilterSlice);
+    const {activeId} = useAppSelector((state) => state.vinaigretteSlice);
 
     const onClickHandler = useCallback(
         (substationId: number) => {

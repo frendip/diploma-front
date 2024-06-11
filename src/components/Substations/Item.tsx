@@ -7,7 +7,7 @@ import {ReactComponent as SubstationYellow} from '../../assets/substation-marker
 import {ReactComponent as TransformerIcon} from '../../assets/transformer-icon.svg';
 import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {useAppSelector} from '../../hooks/useAppSelector';
-import {setActiveSubstation} from '../../store/slices/substationsFilterSlice';
+import {setActiveSubstation} from '../../store/slices/vinaigretteSlice';
 import type {Substation} from '../../types/substations.types';
 import CarsOnRoadList from './CarsOnRoadList';
 import GeneratorsList from './GeneratorsList';
@@ -37,7 +37,7 @@ const translateOption = {
 const Item = forwardRef<HTMLDivElement, ItemProps>(({substation}, ref) => {
     const dispatch = useAppDispatch();
 
-    const {activeId} = useAppSelector((state) => state.substationsFilterSlice);
+    const {activeId} = useAppSelector((state) => state.vinaigretteSlice);
 
     const onClickHandler = useCallback(
         (substationId: number) => {

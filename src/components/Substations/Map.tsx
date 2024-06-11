@@ -3,7 +3,7 @@ import {useGetBasesQuery, useGetSubstationsQuery} from '../../api/SubstationsSer
 import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {useAppSelector} from '../../hooks/useAppSelector';
 import type {Margin, YMapProps} from '../../lib/ymaps';
-import {setActiveSubstation} from '../../store/slices/substationsFilterSlice';
+import {setActiveSubstation} from '../../store/slices/vinaigretteSlice';
 import MapLayout, {DEFAULT_LOCATION} from '../MapLayout';
 import MapSubstationMarker from '../MapSubstationMarker';
 interface MapProps {
@@ -24,7 +24,7 @@ function Map({className: externalStyles}: MapProps) {
 
     const [mapLocation, setMapLocation] = React.useState<YMapProps['location']>(DEFAULT_LOCATION);
 
-    const {status, activeId, panelActiveType} = useAppSelector((state) => state.substationsFilterSlice);
+    const {status, activeId, panelActiveType} = useAppSelector((state) => state.vinaigretteSlice);
     const {data: substationData, isLoading: substationDataIsLoading} = useGetSubstationsQuery({status});
     const {data: basesData, isLoading: basesDataIsLoading} = useGetBasesQuery(null);
 

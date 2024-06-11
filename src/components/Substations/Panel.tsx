@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {useSetSubstationMutation} from '../../api/SubstationsService';
 import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {useAppSelector} from '../../hooks/useAppSelector';
-import {setActiveSubstation} from '../../store/slices/substationsFilterSlice';
+import {setActiveSubstation} from '../../store/slices/vinaigretteSlice';
 import CommonButton from '../UI/CommonButton';
 import BasesList from './BasesList';
 import List from './List';
@@ -16,7 +16,7 @@ interface PanelProps {
 
 function Panel({className: externalStyles}: PanelProps) {
     const dispatch = useAppDispatch();
-    const {activeId, panelActiveType} = useAppSelector((state) => state.substationsFilterSlice);
+    const {activeId, panelActiveType} = useAppSelector((state) => state.vinaigretteSlice);
     const [setSubstation] = useSetSubstationMutation(undefined);
 
     const onClickHandler = useCallback(() => {

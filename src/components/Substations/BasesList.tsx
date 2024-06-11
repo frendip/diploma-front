@@ -2,14 +2,14 @@ import {useEffect, useRef} from 'react';
 import {useGetBasesQuery} from '../../api/SubstationsService';
 import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {useAppSelector} from '../../hooks/useAppSelector';
-import {setActiveSubstation} from '../../store/slices/substationsFilterSlice';
+import {setActiveSubstation} from '../../store/slices/vinaigretteSlice';
 import BasesItem from './BasesItem';
 import SkeletonItem from './SkeletonItem';
 
 function BasesList() {
     const dispatch = useAppDispatch();
 
-    const {status, activeId} = useAppSelector((state) => state.substationsFilterSlice);
+    const {status, activeId} = useAppSelector((state) => state.vinaigretteSlice);
 
     const {data, isLoading} = useGetBasesQuery(null);
 
