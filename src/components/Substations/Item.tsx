@@ -1,4 +1,5 @@
 import {forwardRef, useCallback, useMemo} from 'react';
+import {useDeleteSubstationMutation} from '../../api/SubstationsService';
 import {ReactComponent as AddressIcon} from '../../assets/address-icon.svg';
 import {ReactComponent as EnergyIcon} from '../../assets/energy-icon.svg';
 import {ReactComponent as SubstationGreen} from '../../assets/substation-marker-green.svg';
@@ -9,6 +10,7 @@ import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {useAppSelector} from '../../hooks/useAppSelector';
 import {setActiveSubstation} from '../../store/slices/vinaigretteSlice';
 import type {Substation} from '../../types/substations.types';
+import CommonButton from '../UI/CommonButton';
 import CarsOnRoadList from './CarsOnRoadList';
 import GeneratorsList from './GeneratorsList';
 
@@ -35,15 +37,25 @@ const translateOption = {
 };
 
 const Item = forwardRef<HTMLDivElement, ItemProps>(({substation}, ref) => {
+    const [deleteSubstation] = useDeleteSubstationMutation();
     const dispatch = useAppDispatch();
 
     const {activeSubstationId} = useAppSelector((state) => state.vinaigretteSlice);
 
     const onClickHandler = useCallback(
+        //TODO: добавить проверку, удаляемая подстанция не является базой
         (substationId: number) => {
             dispatch(setActiveSubstation(substationId));
         },
         [dispatch]
+    );
+    const onClickDeleteHandler = useCallback(
+        (substation_id: number, event: React.MouseEvent<HTMLButtonElement>) => {
+            event.stopPropagation();
+            deleteSubstation({substation_id});
+            dispatch(setActiveSubstation(0));
+        },
+        [deleteSubstation, dispatch]
     );
 
     const SubstationIcon = useMemo(() => substationIconOption[substation.status], [substation]);
@@ -85,16 +97,16 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(({substation}, ref) => {
                         <div>2 шт.</div>
                     </div>
                 </div>
-                {/* {substation.status === 'disabled' ? (
+                {substation.status === 'active' && activeSubstationId === substation.substation_id ? (
                     <div className="self-center">
                         <CommonButton
-                            onClick={() => onClickHandler(substation.substation_id)}
-                            text="Вызвать генераторы"
+                            onClick={(e) => onClickDeleteHandler(substation.substation_id, e)}
+                            text={'Удалить подстанцию'}
                         />
                     </div>
                 ) : (
                     ''
-                )} */}
+                )}
             </div>
             {activeSubstationId === substation.substation_id &&
                 (substation.status === 'disabled' ? (
