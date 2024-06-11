@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Item from './Item';
 import {useGetCarsQuery} from '../../api/CarsService';
+import {useAppDispatch} from '../../hooks/useAppDispatch';
+import {setActiveCar} from '../../store/slices/vinaigretteSlice';
 
 interface ListProps {
     className?: string;
@@ -8,6 +10,15 @@ interface ListProps {
 
 function List({className: externalStyles}: ListProps) {
     const {data, isLoading} = useGetCarsQuery(null);
+
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        return () => {
+            dispatch(setActiveCar(null));
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <div className={`${externalStyles} flex flex-col gap-y-4 overflow-auto bg-white/85 px-4 py-9`}>

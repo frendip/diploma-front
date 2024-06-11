@@ -25,6 +25,7 @@ const BasesItem = forwardRef<HTMLDivElement, BaseItemProps>(({base}, ref) => {
         },
         [dispatch]
     );
+
     return (
         <div
             ref={ref}

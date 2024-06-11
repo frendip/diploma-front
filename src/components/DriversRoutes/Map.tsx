@@ -3,7 +3,8 @@ import MapLayout from '../MapLayout';
 import {useLazyGetRouterQuery} from '../../api/RouterService';
 import type {RouterData} from '../../types/map.types';
 import MapSubstationMarker from '../MapSubstationMarker';
-import Route from '../Route/Route';
+import Route from './MapRoute';
+import {useAppSelector} from '../../hooks/useAppSelector';
 
 interface MapProps {
     className?: string;
@@ -28,13 +29,11 @@ function Map({className: externalStyles}: MapProps) {
         asyncFetchRoute();
     }, []);
 
+    const {activeCar} = useAppSelector((state) => state.vinaigretteSlice);
+
     return (
         <div className={`${externalStyles}`}>
-            <MapLayout>
-                <MapSubstationMarker color="blue" coordinates={[37.6063, 55.7641989]} />
-                <MapSubstationMarker color="red" coordinates={[37.616791, 55.7406]} />
-                {router !== null && <Route router={router} />}
-            </MapLayout>
+            <MapLayout>{activeCar?.status === 'delivered' && <Route car={activeCar} />}</MapLayout>
         </div>
     );
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {ReactComponent as TruckImage} from '../../assets/truckImage.svg';
 import {ReactComponent as PhoneIcon} from '../../assets/phone-icon.svg';
 import {ReactComponent as MessageIcon} from '../../assets/message-icon.svg';
@@ -8,6 +8,9 @@ import {Car} from '../../types/cars.types';
 import TwoAddresses from './TwoAddresses';
 import StartAddress from './StartAddress';
 import EndAddress from './EndAddress';
+import {useAppDispatch} from '../../hooks/useAppDispatch';
+import {useAppSelector} from '../../hooks/useAppSelector';
+import {setActiveCar} from '../../store/slices/vinaigretteSlice';
 
 interface ItemProps {
     car: Car;
@@ -26,8 +29,22 @@ const translateOption = {
 };
 
 function Item({car}: ItemProps) {
+    const dispatch = useAppDispatch();
+
+    const {activeCar} = useAppSelector((state) => state.vinaigretteSlice);
+
+    const onClickHandler = useCallback(
+        (car: Car) => {
+            dispatch(setActiveCar(car));
+        },
+        [dispatch]
+    );
+
     return (
-        <div className="flex flex-col rounded-lg bg-white px-3 py-5 shadow">
+        <div
+            onClick={() => onClickHandler(car)}
+            className={`flex cursor-pointer flex-col rounded-lg bg-white px-3 py-5 shadow ${activeCar?.car_id === car.car_id && 'shadow-active'}`}
+        >
             <div className="flex justify-between">
                 <div className="shrink-0 grow-0 basis-3/5">
                     <div className="text-sm font-medium text-gray-500/75">Перевозимый генератор</div>
