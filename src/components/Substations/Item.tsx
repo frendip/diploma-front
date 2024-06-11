@@ -85,16 +85,6 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(({substation}, ref) => {
                         <div>2 шт.</div>
                     </div>
                 </div>
-                {/* {substation.status === 'disabled' ? (
-                    <div className="self-center">
-                        <CommonButton
-                            onClick={() => onClickHandler(substation.substation_id)}
-                            text="Вызвать генераторы"
-                        />
-                    </div>
-                ) : (
-                    ''
-                )} */}
             </div>
             {activeSubstationId === substation.substation_id &&
                 (substation.status === 'disabled' ? (
@@ -102,11 +92,13 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(({substation}, ref) => {
                         <div className="mx-3 h-full border-l-2 border-dashed border-gray-400/50"></div>
                         <GeneratorsList />
                     </>
-                ) : (
+                ) : substation.status === 'waiting' ? (
                     <>
                         <div className="mx-3 h-full border-l-2 border-dashed border-gray-400/50"></div>{' '}
                         <CarsOnRoadList />
                     </>
+                ) : (
+                    <></>
                 ))}
         </div>
     );
