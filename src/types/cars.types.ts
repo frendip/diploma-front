@@ -1,5 +1,6 @@
-import {LngLat} from '@yandex/ymaps3';
-import {RawResp} from './resp.types';
+import type {LngLat} from '../lib/ymaps';
+import type {RawResp} from './resp.types';
+import type {Substation} from './substations.types';
 
 export interface Car {
     car_id: number;
@@ -13,4 +14,19 @@ export interface Car {
 
 export interface CarsResp extends RawResp {
     data: Car[];
+}
+
+export interface CarResp extends RawResp {
+    data: Car;
+}
+
+export interface CarRoute {
+    cars_route_id: number;
+    car_id: number;
+    start_substation: Substation;
+    end_substation: Substation;
+}
+
+export interface CarRouteResp extends RawResp {
+    data: CarRoute;
 }

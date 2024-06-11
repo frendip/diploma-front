@@ -6,6 +6,12 @@ const statusColorOption = {
     delivered: 'text-indigo-600'
 } as const;
 
+const translateOption = {
+    onBase: 'На базе',
+    inWork: 'В работе',
+    delivered: 'В пути'
+};
+
 interface CarsOnRoadItemProps {
     car: Car;
 }
@@ -31,7 +37,7 @@ function CarsOnRoadItem({car}: CarsOnRoadItemProps) {
             <div className="flex justify-between">
                 <div>Статус:</div>
 
-                <div className={`${statusColorOption[car.status]}`}>{car.status}</div>
+                <div className={`${statusColorOption[car.status]}`}>{translateOption[car.status]}</div>
             </div>
         </div>
     );

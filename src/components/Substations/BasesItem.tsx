@@ -32,7 +32,7 @@ const BasesItem = forwardRef<HTMLDivElement, BaseItemProps>(({base}, ref) => {
             className={`flex h-72 cursor-pointer rounded-lg bg-white p-3 shadow ${activeId === base.substation_id && 'shadow-active'}`}
         >
             <div className="flex w-56 min-w-56 flex-col">
-                <div className="mb-4 flex gap-x-4">
+                <div className="mb-4 flex items-center gap-x-4">
                     <div className="h-12 w-12 overflow-hidden rounded-full">
                         <SubstationBlue />
                     </div>
