@@ -1,16 +1,29 @@
-import {YMapProps} from '@yandex/ymaps3';
-import React from 'react';
+import {useCallback, useState} from 'react';
 import Panel from '../components/AddSubstation/Panel';
 import MapLayout, {DEFAULT_LOCATION} from '../components/MapLayout';
+import MapSubstationMarker from '../components/MapSubstationMarker';
+import {BehaviorMapEventHandler, MapEventUpdateHandler, YMapListener, YMapLocation} from '../lib/ymaps';
 
 function AddSubstationPage() {
-    const [mapLocation, setMapLocation] = React.useState<YMapProps['location']>(DEFAULT_LOCATION);
+    const [location, setLocation] = useState<YMapLocation>(DEFAULT_LOCATION as YMapLocation);
+    const [centerCoordinates, setCenterCoordinates] = useState<YMapLocation['center']>(
+        (DEFAULT_LOCATION as YMapLocation).center
+    );
 
+    const onUpdateHandler: MapEventUpdateHandler = useCallback(({location}) => {
+        setLocation(location);
+    }, []);
+    const onActionEndHandler: BehaviorMapEventHandler = useCallback(({location}) => {
+        setCenterCoordinates(location.center);
+    }, []);
     return (
         <>
-            <Panel className="w-add-substation-panel h-add-substation-panel absolute bottom-0 left-0 z-50" />
+            <Panel className="absolute bottom-0 left-0 z-50 w-add-substation-panel" coordinates={centerCoordinates} />
             <div className="absolute bottom-0 left-0 right-0 top-0">
-                <MapLayout location={mapLocation}></MapLayout>
+                <MapLayout>
+                    <YMapListener onUpdate={onUpdateHandler} onActionEnd={onActionEndHandler} />
+                    <MapSubstationMarker color="green" coordinates={location.center}></MapSubstationMarker>
+                </MapLayout>
             </div>
         </>
     );

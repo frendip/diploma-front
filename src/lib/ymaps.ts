@@ -1,14 +1,15 @@
 import type {
+    BehaviorMapEventHandler,
+    BehaviorType,
+    DomEventHandler,
     DrawingStyle,
     LngLat,
     LngLatBounds,
     MapEventUpdateHandler,
-    YMapLocationRequest,
-    YMapProps,
     Margin,
-    BehaviorType,
-    DomEventHandler,
-    YMapMarkerProps
+    YMapLocationRequest,
+    YMapMarkerProps,
+    YMapProps
 } from '@yandex/ymaps3';
 import * as ymaps3 from '@yandex/ymaps3';
 import {YMapLocation} from '@yandex/ymaps3/imperative/YMap';
@@ -50,16 +51,17 @@ export {
 };
 
 export type {
+    BehaviorMapEventHandler,
+    BehaviorType,
+    DomEventHandler,
     DrawingStyle,
     Geometry,
     LngLat,
     LngLatBounds,
     MapEventUpdateHandler,
+    Margin,
     YMapLocation,
     YMapLocationRequest,
-    YMapProps,
-    Margin,
-    BehaviorType,
-    DomEventHandler,
-    YMapMarkerProps
+    YMapMarkerProps,
+    YMapProps
 };
