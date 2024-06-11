@@ -33,7 +33,6 @@ function Panel({className: externalStyles, coordinates}: PanelProps) {
 
     useEffect(() => {
         const fetchAddress = async () => {
-            console.log(coordinates);
             const data = await getAddress({coordinates});
             setValue('address', data?.data.data);
             setValue('coordinates', coordinates);

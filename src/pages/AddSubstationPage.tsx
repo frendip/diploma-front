@@ -2,7 +2,7 @@ import {useCallback, useState} from 'react';
 import Panel from '../components/AddSubstation/Panel';
 import MapLayout, {DEFAULT_LOCATION} from '../components/MapLayout';
 import MapSubstationMarker from '../components/MapSubstationMarker';
-import {BehaviorMapEventHandler, MapEventUpdateHandler, YMapListener, YMapLocation} from '../lib/ymaps';
+import {BehaviorMapEventHandler, LngLat, MapEventUpdateHandler, YMapListener, YMapLocation} from '../lib/ymaps';
 
 function AddSubstationPage() {
     const [location, setLocation] = useState<YMapLocation>(DEFAULT_LOCATION as YMapLocation);
@@ -14,7 +14,8 @@ function AddSubstationPage() {
         setLocation(location);
     }, []);
     const onActionEndHandler: BehaviorMapEventHandler = useCallback(({location}) => {
-        setCenterCoordinates(location.center);
+        const fixCoordinates: LngLat = [+location.center[0].toFixed(6), +location.center[1].toFixed(6)];
+        setCenterCoordinates(fixCoordinates);
     }, []);
     return (
         <>
