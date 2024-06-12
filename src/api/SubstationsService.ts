@@ -2,6 +2,7 @@ import {LngLat} from '@yandex/ymaps3';
 import {RawResp} from '../types/resp.types';
 import type {BasesResp, Substation, SubstationResp, SubstationsResp} from '../types/substations.types';
 import {ApiService} from './ApiService';
+import {CarsWithMatrixResp} from '../types/cars.types';
 const SUBSTATION_URL = '/substations';
 
 export const SubstationsApi = ApiService.injectEndpoints({
@@ -26,9 +27,6 @@ export const SubstationsApi = ApiService.injectEndpoints({
             }),
             invalidatesTags: ['Substations']
         }),
-        getAddressFromCoordinates: builder.query<any, {coordinates: LngLat}>({
-            query: (params) => ({url: '/geocode', params, method: 'GET'})
-        }),
         deleteSubstation: builder.mutation<RawResp, {substation_id: number}>({
             query: (params) => ({
                 url: `${SUBSTATION_URL}`,
@@ -36,6 +34,13 @@ export const SubstationsApi = ApiService.injectEndpoints({
                 method: 'DELETE'
             }),
             invalidatesTags: ['Substations']
+        }),
+        getSubstationRepairCars: builder.query<CarsWithMatrixResp, number>({
+            query: (id) => ({url: `${SUBSTATION_URL}/${id}/repair-cars`, method: 'get'}),
+            providesTags: ['Substations']
+        }),
+        getAddressFromCoordinates: builder.query<any, {coordinates: LngLat}>({
+            query: (params) => ({url: '/geocode', params, method: 'GET'})
         })
     })
 });
@@ -46,5 +51,6 @@ export const {
     useSetSubstationMutation,
     useGetSubstationByIdQuery,
     useLazyGetAddressFromCoordinatesQuery,
-    useDeleteSubstationMutation
+    useDeleteSubstationMutation,
+    useGetSubstationRepairCarsQuery
 } = SubstationsApi;

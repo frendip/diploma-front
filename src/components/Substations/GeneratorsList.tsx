@@ -1,12 +1,20 @@
 import React from 'react';
 import GeneratorsItem from './GeneratorsItem';
 
-function GeneratorsList() {
+import {useGetSubstationRepairCarsQuery} from '../../api/SubstationsService';
+
+interface GeneratorsListProps {
+    substationId: number;
+}
+
+function GeneratorsList({substationId}: GeneratorsListProps) {
+    const {data, isLoading} = useGetSubstationRepairCarsQuery(substationId);
+
+    console.log(data);
+
     return (
         <div className="flex flex-col gap-y-3 overflow-y-auto overflow-x-hidden">
-            {[...new Array(30)].map((_, index) => (
-                <GeneratorsItem key={index} />
-            ))}
+            {data && data.data.map((car) => <GeneratorsItem carWithMatrix={car} key={car.car_id} />)}
         </div>
     );
 }

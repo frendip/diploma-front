@@ -112,7 +112,7 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(({substation}, ref) => {
                 (substation.status === 'disabled' ? (
                     <>
                         <div className="mx-3 h-full border-l-2 border-dashed border-gray-400/50"></div>
-                        <GeneratorsList />
+                        <GeneratorsList substationId={substation.substation_id} />
                     </>
                 ) : substation.status === 'waiting' ? (
                     <>

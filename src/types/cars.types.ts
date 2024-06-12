@@ -40,3 +40,13 @@ export interface RepairingSubstation {
 export interface RepairingSubstationResp extends RawResp {
     data: RepairingSubstation;
 }
+
+export interface CarWithMatrix extends Car {
+    duration_time: number;
+    distance: number;
+    base_name: string;
+}
+
+export interface CarsWithMatrixResp extends RawResp {
+    data: CarWithMatrix[];
+}
