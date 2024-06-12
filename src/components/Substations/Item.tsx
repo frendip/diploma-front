@@ -1,5 +1,6 @@
 import {forwardRef, useCallback, useEffect, useMemo} from 'react';
-import {useDeleteSubstationMutation} from '../../api/SubstationsService';
+import {useUpdateCarMutation} from '../../api/CarsService';
+import {useDeleteSubstationMutation, useUpdateSubstationMutation} from '../../api/SubstationsService';
 import {ReactComponent as AddressIcon} from '../../assets/address-icon.svg';
 import {ReactComponent as EnergyIcon} from '../../assets/energy-icon.svg';
 import {ReactComponent as SubstationGreen} from '../../assets/substation-marker-green.svg';
@@ -8,7 +9,12 @@ import {ReactComponent as SubstationYellow} from '../../assets/substation-marker
 import {ReactComponent as TransformerIcon} from '../../assets/transformer-icon.svg';
 import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {useAppSelector} from '../../hooks/useAppSelector';
-import {setActiveSubstation, setDisabledCars, setSelectedCars} from '../../store/slices/vinaigretteSlice';
+import {
+    setActiveSubstation,
+    setDisabledCars,
+    setSelectedCars,
+    setSubstationsStatus
+} from '../../store/slices/vinaigretteSlice';
 import {CarWithMatrix} from '../../types/cars.types';
 import type {Substation} from '../../types/substations.types';
 import CommonButton from '../UI/CommonButton';
@@ -38,11 +44,29 @@ const translateOption = {
 };
 
 const Item = forwardRef<HTMLDivElement, ItemProps>(({substation}, ref) => {
-    const [deleteSubstation] = useDeleteSubstationMutation();
     const dispatch = useAppDispatch();
-
     const {activeSubstationId, selectedCars} = useAppSelector((state) => state.vinaigretteSlice);
+
+    const [deleteSubstation] = useDeleteSubstationMutation();
+    const [updateCar] = useUpdateCarMutation();
+    const [updateSubstation] = useUpdateSubstationMutation();
+
+    const SubstationIcon = useMemo(() => substationIconOption[substation.status], [substation]);
     const maxAccumulatedPower = substation.power;
+
+    const onClickGeneratorCallHandler = () => {
+        const {substation_id, ...substationWithoutId} = substation;
+        substationWithoutId['status'] = 'waiting';
+        updateSubstation({substation_id, substationWithoutId});
+
+        selectedCars.forEach((car) => {
+            const {car_id, ...carWithoutId} = car;
+            carWithoutId['status'] = 'delivered';
+            updateCar({car_id, carWithoutId});
+        });
+        dispatch(setActiveSubstation(0));
+        dispatch(setSubstationsStatus('all'));
+    };
 
     const onClickHandler = useCallback(
         (substationId: number) => {
@@ -60,8 +84,6 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(({substation}, ref) => {
         },
         [deleteSubstation, dispatch]
     );
-
-    const SubstationIcon = useMemo(() => substationIconOption[substation.status], [substation]);
 
     const sumGeneratorsPower = useCallback(() => {
         return selectedCars.reduce((accumulator: number, currentValue: CarWithMatrix) => {
@@ -134,7 +156,7 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(({substation}, ref) => {
                   activeSubstationId === substation.substation_id &&
                   sumGeneratorsPower() >= maxAccumulatedPower ? (
                     <div className="self-center">
-                        <CommonButton text={'Вызвать генераторы'} />
+                        <CommonButton text={'Вызвать генераторы'} onClick={onClickGeneratorCallHandler} />
                     </div>
                 ) : (
                     ''
