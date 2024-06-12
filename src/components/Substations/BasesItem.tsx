@@ -64,7 +64,7 @@ const BasesItem = forwardRef<HTMLDivElement, BaseItemProps>(({base}, ref) => {
             {activeSubstationId === base.substation_id && (
                 <>
                     <div className="mx-3 h-full border-l-2 border-dashed border-gray-400/50"></div>
-                    <CarsOnBaseList />
+                    <CarsOnBaseList substation_id={base.substation_id} />
                 </>
             )}
         </div>

@@ -27,12 +27,12 @@ function CarsOnRoadItem({car}: CarsOnRoadItemProps) {
                 <div>Мощность:</div>
                 <div>{car.generator_power} кВт</div>
             </div>
-            {car.status === 'delivered' && (
+            {/* {car.status === 'delivered' && (
                 <div className="flex justify-between">
                     <div>Оставшееся время в пути:</div>
                     <div>30 мин</div>
                 </div>
-            )}
+            )} */}
 
             <div className="flex justify-between">
                 <div>Статус:</div>
