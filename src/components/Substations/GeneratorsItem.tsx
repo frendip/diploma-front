@@ -3,7 +3,7 @@ import type {CarWithMatrix} from '../../types/cars.types';
 
 interface GeneratorsItemProps {
     carWithMatrix: CarWithMatrix;
-    handleClickCheckBox: (car_id: number, generator_power: number, isChecked: boolean) => void;
+    handleClickCheckBox: (car: CarWithMatrix, isChecked: boolean) => void;
     disabled: boolean;
 }
 
@@ -18,9 +18,9 @@ const statusColorOption = {
 function GeneratorsItem({carWithMatrix, handleClickCheckBox: onCheck, disabled}: GeneratorsItemProps) {
     const handleCheckboxChange = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
-            onCheck(carWithMatrix.car_id, carWithMatrix.generator_power, event.target.checked);
+            onCheck(carWithMatrix, event.target.checked);
         },
-        [carWithMatrix.car_id, carWithMatrix.generator_power, onCheck]
+        [carWithMatrix, onCheck]
     );
     return (
         <label

@@ -1,31 +1,46 @@
-import {useCallback, useState} from 'react';
+import {useCallback} from 'react';
 import GeneratorsItem from './GeneratorsItem';
 
 import {useGetSubstationRepairCarsQuery} from '../../api/SubstationsService';
-
+import {useAppDispatch} from '../../hooks/useAppDispatch';
+import {useAppSelector} from '../../hooks/useAppSelector';
+import {setSelectedCars} from '../../store/slices/vinaigretteSlice';
+import {CarWithMatrix} from '../../types/cars.types';
+const MAX_SELECTED_GENERATORS = 2;
 interface GeneratorsListProps {
     substationId: number;
-    handleClickGenerator: (car_id: number, generator_power: number, isChecked: boolean) => void;
-    disabled: boolean;
 }
 
-function GeneratorsList({substationId, handleClickGenerator, disabled}: GeneratorsListProps) {
+function GeneratorsList({substationId}: GeneratorsListProps) {
+    const dispatch = useAppDispatch();
+
     const {data, isLoading} = useGetSubstationRepairCarsQuery(substationId);
-    const [selectedGenerators, setSelectedGenerators] = useState<{car_id: number; generator_power: number}[]>([]);
-    const maxSelectedGenerators = 2;
+
+    const {selectedCars, disabledCars} = useAppSelector((state) => state.vinaigretteSlice);
 
     const handleClickCheckBox = useCallback(
-        (car_id: number, generator_power: number, isChecked: boolean) => {
-            handleClickGenerator(car_id, generator_power, isChecked);
-            setSelectedGenerators((prevSelected) => {
+        (car: CarWithMatrix, isChecked: boolean) => {
+            const updateSelectedCars = (selectedCars: CarWithMatrix[]) => {
                 if (isChecked) {
-                    return [...prevSelected, {car_id, generator_power}];
+                    return [...selectedCars, car];
                 } else {
-                    return prevSelected.filter((item) => item.car_id !== car_id);
+                    return selectedCars.filter((item) => item.car_id !== car.car_id);
                 }
-            });
+            };
+            dispatch(setSelectedCars(updateSelectedCars(selectedCars)));
         },
-        [handleClickGenerator]
+        [dispatch, selectedCars]
+    );
+
+    const checkToDisabledCars = useCallback(
+        (car: CarWithMatrix) => {
+            return (
+                (disabledCars && !selectedCars.some((generator) => generator.car_id === car.car_id)) ||
+                (selectedCars.length >= MAX_SELECTED_GENERATORS &&
+                    !selectedCars.some((generator) => generator.car_id === car.car_id))
+            );
+        },
+        [disabledCars, selectedCars]
     );
 
     return (
@@ -36,11 +51,7 @@ function GeneratorsList({substationId, handleClickGenerator, disabled}: Generato
                         carWithMatrix={car}
                         key={car.car_id}
                         handleClickCheckBox={handleClickCheckBox}
-                        disabled={
-                            (disabled && !selectedGenerators.some((generator) => generator.car_id === car.car_id)) ||
-                            (selectedGenerators.length >= maxSelectedGenerators &&
-                                !selectedGenerators.some((generator) => generator.car_id === car.car_id))
-                        }
+                        disabled={checkToDisabledCars(car)}
                     />
                 ))}
         </div>

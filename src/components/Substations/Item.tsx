@@ -1,4 +1,4 @@
-import {forwardRef, useCallback, useEffect, useMemo, useState} from 'react';
+import {forwardRef, useCallback, useEffect, useMemo} from 'react';
 import {useDeleteSubstationMutation} from '../../api/SubstationsService';
 import {ReactComponent as AddressIcon} from '../../assets/address-icon.svg';
 import {ReactComponent as EnergyIcon} from '../../assets/energy-icon.svg';
@@ -8,7 +8,8 @@ import {ReactComponent as SubstationYellow} from '../../assets/substation-marker
 import {ReactComponent as TransformerIcon} from '../../assets/transformer-icon.svg';
 import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {useAppSelector} from '../../hooks/useAppSelector';
-import {setActiveSubstation} from '../../store/slices/vinaigretteSlice';
+import {setActiveSubstation, setDisabledCars, setSelectedCars} from '../../store/slices/vinaigretteSlice';
+import {CarWithMatrix} from '../../types/cars.types';
 import type {Substation} from '../../types/substations.types';
 import CommonButton from '../UI/CommonButton';
 import CarsOnRoadList from './CarsOnRoadList';
@@ -40,18 +41,18 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(({substation}, ref) => {
     const [deleteSubstation] = useDeleteSubstationMutation();
     const dispatch = useAppDispatch();
 
-    const {activeSubstationId} = useAppSelector((state) => state.vinaigretteSlice);
-    const [accumulatedPower, setAccumulatedPower] = useState<{car_id: number; generator_power: number}[]>([]);
+    const {activeSubstationId, selectedCars} = useAppSelector((state) => state.vinaigretteSlice);
     const maxAccumulatedPower = substation.power;
 
     const onClickHandler = useCallback(
-        //TODO: добавить проверку, удаляемая подстанция не является базой
         (substationId: number) => {
             dispatch(setActiveSubstation(substationId));
         },
         [dispatch]
     );
     const onClickDeleteHandler = useCallback(
+        //TODO: добавить проверку, удаляемая подстанция не является базой
+
         (substation_id: number, event: React.MouseEvent<HTMLButtonElement>) => {
             event.stopPropagation();
             deleteSubstation({substation_id});
@@ -62,28 +63,22 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(({substation}, ref) => {
 
     const SubstationIcon = useMemo(() => substationIconOption[substation.status], [substation]);
 
-    const handleClickGenerator = useCallback((car_id: number, generator_power: number, isChecked: boolean) => {
-        setAccumulatedPower((prevSelected) => {
-            if (isChecked) {
-                return [...prevSelected, {car_id, generator_power}];
-            } else {
-                return prevSelected.filter((item) => item.car_id !== car_id);
-            }
-        });
-    }, []);
+    const sumGeneratorsPower = useCallback(() => {
+        return selectedCars.reduce((accumulator: number, currentValue: CarWithMatrix) => {
+            return accumulator + currentValue.generator_power;
+        }, 0);
+    }, [selectedCars]);
 
     useEffect(() => {
-        setAccumulatedPower([]);
-    }, [activeSubstationId]);
+        if (activeSubstationId) {
+            dispatch(setDisabledCars(sumGeneratorsPower() >= maxAccumulatedPower));
+        }
+    }, [activeSubstationId, dispatch, maxAccumulatedPower, sumGeneratorsPower, selectedCars]);
 
-    const sumGeneratorsPower = useCallback(() => {
-        return accumulatedPower.reduce(
-            (accumulator: number, currentValue: {car_id: number; generator_power: number}) => {
-                return accumulator + currentValue.generator_power;
-            },
-            0
-        );
-    }, [accumulatedPower]);
+    useEffect(() => {
+        dispatch(setDisabledCars(false));
+        dispatch(setSelectedCars([]));
+    }, [activeSubstationId, dispatch]);
 
     return (
         <div
@@ -149,11 +144,7 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(({substation}, ref) => {
                 (substation.status === 'disabled' ? (
                     <>
                         <div className="mx-3 h-full border-l-2 border-dashed border-gray-400/50"></div>
-                        <GeneratorsList
-                            substationId={substation.substation_id}
-                            handleClickGenerator={handleClickGenerator}
-                            disabled={sumGeneratorsPower() >= maxAccumulatedPower}
-                        />
+                        <GeneratorsList substationId={substation.substation_id} />
                     </>
                 ) : substation.status === 'waiting' ? (
                     <>

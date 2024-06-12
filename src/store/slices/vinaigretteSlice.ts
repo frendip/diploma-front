@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {Car, CarWithMatrix} from '../../types/cars.types';
 import {Substation} from '../../types/substations.types';
-import {Car} from '../../types/cars.types';
 
 export type PanelACtiveType = 'substations' | 'bases';
 interface VinaigretteState {
@@ -8,13 +8,17 @@ interface VinaigretteState {
     activeSubstationId: number;
     activeCar: Car | null;
     panelActiveType: PanelACtiveType;
+    disabledCars: boolean;
+    selectedCars: CarWithMatrix[];
 }
 
 const initialState: VinaigretteState = {
     status: 'all',
     activeSubstationId: 0,
     activeCar: null,
-    panelActiveType: 'substations'
+    panelActiveType: 'substations',
+    disabledCars: false,
+    selectedCars: []
 };
 
 const vinaigretteSlice = createSlice({
@@ -32,10 +36,23 @@ const vinaigretteSlice = createSlice({
         },
         setPanelActiveType(state, action: PayloadAction<VinaigretteState['panelActiveType']>) {
             state.panelActiveType = action.payload;
+        },
+        setSelectedCars(state, action: PayloadAction<VinaigretteState['selectedCars']>) {
+            state.selectedCars = action.payload;
+        },
+        setDisabledCars(state, action: PayloadAction<VinaigretteState['disabledCars']>) {
+            state.disabledCars = action.payload;
         }
     }
 });
 
-export const {setSubstationsStatus, setActiveSubstation, setPanelActiveType, setActiveCar} = vinaigretteSlice.actions;
+export const {
+    setSubstationsStatus,
+    setActiveSubstation,
+    setPanelActiveType,
+    setActiveCar,
+    setSelectedCars,
+    setDisabledCars
+} = vinaigretteSlice.actions;
 
 export default vinaigretteSlice.reducer;
