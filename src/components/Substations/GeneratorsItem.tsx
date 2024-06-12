@@ -1,7 +1,10 @@
+import {useCallback} from 'react';
 import type {CarWithMatrix} from '../../types/cars.types';
 
 interface GeneratorsItemProps {
     carWithMatrix: CarWithMatrix;
+    handleClickCheckBox: (car_id: number, generator_power: number, isChecked: boolean) => void;
+    disabled: boolean;
 }
 
 const statusColorOption = {
@@ -12,7 +15,14 @@ const statusColorOption = {
     black: 'text-black'
 } as const;
 
-function GeneratorsItem({carWithMatrix}: GeneratorsItemProps) {
+function GeneratorsItem({carWithMatrix, handleClickCheckBox: onCheck, disabled}: GeneratorsItemProps) {
+    const handleCheckboxChange = useCallback(
+        (event: React.ChangeEvent<HTMLInputElement>) => {
+            onCheck(carWithMatrix.car_id, carWithMatrix.generator_power, event.target.checked);
+        },
+        [carWithMatrix.car_id, carWithMatrix.generator_power, onCheck]
+    );
+    console.log(disabled);
     return (
         <label
             className="flex w-96 items-center gap-4 rounded-lg border border-solid border-active px-2 py-1"
@@ -25,7 +35,12 @@ function GeneratorsItem({carWithMatrix}: GeneratorsItemProps) {
             <div>{carWithMatrix.generator_power}кВт</div>
             <div className="flex-1 text-nowrap">{carWithMatrix.duration_time} min</div>
             <div className={`${statusColorOption['green']}`}>Готов</div>
-            <input type="checkbox" id={String(carWithMatrix.car_id)} />
+            <input
+                type="checkbox"
+                id={String(carWithMatrix.car_id)}
+                onChange={handleCheckboxChange}
+                disabled={disabled}
+            />
         </label>
     );
 }

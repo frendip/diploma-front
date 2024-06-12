@@ -1,4 +1,4 @@
-import {forwardRef, useCallback, useMemo} from 'react';
+import {forwardRef, useCallback, useMemo, useState} from 'react';
 import {useDeleteSubstationMutation} from '../../api/SubstationsService';
 import {ReactComponent as AddressIcon} from '../../assets/address-icon.svg';
 import {ReactComponent as EnergyIcon} from '../../assets/energy-icon.svg';
@@ -41,6 +41,8 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(({substation}, ref) => {
     const dispatch = useAppDispatch();
 
     const {activeSubstationId} = useAppSelector((state) => state.vinaigretteSlice);
+    const [accumulatedPower, setAccumulatedPower] = useState<{car_id: number; generator_power: number}[]>([]);
+    const maxAccumulatedPower = substation.power;
 
     const onClickHandler = useCallback(
         //TODO: добавить проверку, удаляемая подстанция не является базой
@@ -59,6 +61,24 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(({substation}, ref) => {
     );
 
     const SubstationIcon = useMemo(() => substationIconOption[substation.status], [substation]);
+
+    const handleClickGenerator = useCallback((car_id: number, generator_power: number, isChecked: boolean) => {
+        setAccumulatedPower((prevSelected) => {
+            if (isChecked) {
+                return [...prevSelected, {car_id, generator_power}];
+            } else {
+                return prevSelected.filter((item) => item.car_id !== car_id);
+            }
+        });
+    }, []);
+    const sumGeneratorsPower = useCallback(() => {
+        return accumulatedPower.reduce(
+            (accumulator: number, currentValue: {car_id: number; generator_power: number}) => {
+                return accumulator + currentValue.generator_power;
+            },
+            0
+        );
+    }, [accumulatedPower]);
 
     return (
         <div
@@ -90,7 +110,13 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(({substation}, ref) => {
                     </div>
                     <div className="flex items-center gap-x-3">
                         <EnergyIcon />
-                        <div>{substation.power} кВт</div>
+                        <div>
+                            {substation.power}
+                            {substation.status === 'disabled' && activeSubstationId === substation.substation_id
+                                ? `/${sumGeneratorsPower()} `
+                                : ''}{' '}
+                            кВт
+                        </div>
                     </div>
                     <div className="flex items-center gap-x-3">
                         <TransformerIcon />
@@ -104,6 +130,12 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(({substation}, ref) => {
                             text={'Удалить подстанцию'}
                         />
                     </div>
+                ) : substation.status === 'disabled' &&
+                  activeSubstationId === substation.substation_id &&
+                  sumGeneratorsPower() >= maxAccumulatedPower ? (
+                    <div className="self-center">
+                        <CommonButton text={'Вызвать генераторы'} />
+                    </div>
                 ) : (
                     ''
                 )}
@@ -112,7 +144,11 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(({substation}, ref) => {
                 (substation.status === 'disabled' ? (
                     <>
                         <div className="mx-3 h-full border-l-2 border-dashed border-gray-400/50"></div>
-                        <GeneratorsList substationId={substation.substation_id} />
+                        <GeneratorsList
+                            substationId={substation.substation_id}
+                            handleClickGenerator={handleClickGenerator}
+                            disabled={sumGeneratorsPower() >= maxAccumulatedPower}
+                        />
                     </>
                 ) : substation.status === 'waiting' ? (
                     <>
