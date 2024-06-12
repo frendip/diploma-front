@@ -19,8 +19,11 @@ function Map({className: externalStyles}: MapProps) {
             <MapLayout>
                 {activeCar && (
                     <>
-                        {activeCar.status === 'delivered' && <Route car={activeCar} />}{' '}
-                        <MapDriverMarker coordinates={activeCar.coordinates} />
+                        {activeCar.status === 'delivered' ? (
+                            <Route car={activeCar} />
+                        ) : (
+                            <MapDriverMarker coordinates={activeCar.coordinates} />
+                        )}
                     </>
                 )}
             </MapLayout>
