@@ -1,4 +1,4 @@
-import {forwardRef, useCallback, useMemo, useState} from 'react';
+import {forwardRef, useCallback, useEffect, useMemo, useState} from 'react';
 import {useDeleteSubstationMutation} from '../../api/SubstationsService';
 import {ReactComponent as AddressIcon} from '../../assets/address-icon.svg';
 import {ReactComponent as EnergyIcon} from '../../assets/energy-icon.svg';
@@ -71,6 +71,11 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(({substation}, ref) => {
             }
         });
     }, []);
+
+    useEffect(() => {
+        setAccumulatedPower([]);
+    }, [activeSubstationId]);
+
     const sumGeneratorsPower = useCallback(() => {
         return accumulatedPower.reduce(
             (accumulator: number, currentValue: {car_id: number; generator_power: number}) => {

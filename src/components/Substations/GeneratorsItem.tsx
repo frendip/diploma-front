@@ -22,7 +22,6 @@ function GeneratorsItem({carWithMatrix, handleClickCheckBox: onCheck, disabled}:
         },
         [carWithMatrix.car_id, carWithMatrix.generator_power, onCheck]
     );
-    console.log(disabled);
     return (
         <label
             className="flex w-96 items-center gap-4 rounded-lg border border-solid border-active px-2 py-1"
