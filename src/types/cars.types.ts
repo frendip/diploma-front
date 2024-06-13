@@ -27,6 +27,12 @@ export interface CarRoute {
     end_substation: Substation;
 }
 
+export interface RawCarRoute {
+    car_id: number;
+    start_substation_id: number;
+    end_substation_id: number;
+}
+
 export interface CarRouteResp extends RawResp {
     data: CarRoute;
 }

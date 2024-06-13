@@ -1,5 +1,5 @@
 import {forwardRef, useCallback, useEffect, useMemo} from 'react';
-import {useUpdateCarMutation} from '../../api/CarsService';
+import {useSetCarRouteMutation, useUpdateCarMutation} from '../../api/CarsService';
 import {useDeleteSubstationMutation, useUpdateSubstationMutation} from '../../api/SubstationsService';
 import {ReactComponent as AddressIcon} from '../../assets/address-icon.svg';
 import {ReactComponent as EnergyIcon} from '../../assets/energy-icon.svg';
@@ -50,6 +50,7 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(({substation}, ref) => {
     const [deleteSubstation] = useDeleteSubstationMutation();
     const [updateCar] = useUpdateCarMutation();
     const [updateSubstation] = useUpdateSubstationMutation();
+    const [setCarRoute] = useSetCarRouteMutation();
 
     const SubstationIcon = useMemo(() => substationIconOption[substation.status], [substation]);
     const maxAccumulatedPower = substation.power;
@@ -63,6 +64,8 @@ const Item = forwardRef<HTMLDivElement, ItemProps>(({substation}, ref) => {
             const {car_id, ...carWithoutId} = car;
             carWithoutId['status'] = 'delivered';
             updateCar({car_id, carWithoutId});
+
+            setCarRoute({car_id, start_substation_id: carWithoutId.base_id, end_substation_id: substation_id});
         });
         dispatch(setActiveSubstation(0));
         dispatch(setSubstationsStatus('all'));

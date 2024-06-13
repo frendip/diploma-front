@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import Item from './Item';
 import {useGetCarsQuery} from '../../api/CarsService';
 import {useAppDispatch} from '../../hooks/useAppDispatch';
-import {setActiveCar} from '../../store/slices/vinaigretteSlice';
+import {setActiveCarId} from '../../store/slices/vinaigretteSlice';
 
 interface ListProps {
     className?: string;
@@ -15,7 +15,7 @@ function List({className: externalStyles}: ListProps) {
 
     useEffect(() => {
         return () => {
-            dispatch(setActiveCar(null));
+            dispatch(setActiveCarId(0));
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

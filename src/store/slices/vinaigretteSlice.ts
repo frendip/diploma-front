@@ -6,7 +6,7 @@ export type PanelACtiveType = 'substations' | 'bases';
 interface VinaigretteState {
     status: Substation['status'] | 'all';
     activeSubstationId: number;
-    activeCar: Car | null;
+    activeCarId: number;
     panelActiveType: PanelACtiveType;
     disabledCars: boolean;
     selectedCars: CarWithMatrix[];
@@ -15,7 +15,7 @@ interface VinaigretteState {
 const initialState: VinaigretteState = {
     status: 'all',
     activeSubstationId: 0,
-    activeCar: null,
+    activeCarId: 0,
     panelActiveType: 'substations',
     disabledCars: false,
     selectedCars: []
@@ -31,8 +31,8 @@ const vinaigretteSlice = createSlice({
         setActiveSubstation(state, action: PayloadAction<VinaigretteState['activeSubstationId']>) {
             state.activeSubstationId = action.payload;
         },
-        setActiveCar(state, action: PayloadAction<VinaigretteState['activeCar']>) {
-            state.activeCar = action.payload;
+        setActiveCarId(state, action: PayloadAction<VinaigretteState['activeCarId']>) {
+            state.activeCarId = action.payload;
         },
         setPanelActiveType(state, action: PayloadAction<VinaigretteState['panelActiveType']>) {
             state.panelActiveType = action.payload;
@@ -50,7 +50,7 @@ export const {
     setSubstationsStatus,
     setActiveSubstation,
     setPanelActiveType,
-    setActiveCar,
+    setActiveCarId,
     setSelectedCars,
     setDisabledCars
 } = vinaigretteSlice.actions;

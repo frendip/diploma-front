@@ -1,4 +1,4 @@
-import React, {useMemo, useEffect, useState, useCallback} from 'react';
+import React, {useMemo, useEffect, useState} from 'react';
 import {YMapFeature} from '../../lib/ymaps';
 import {findNearestIndex, getFeatureGeometry, getFeatureCoordinates, getFeatureStyle} from './utils';
 import type {RouterData} from '../../types/map.types';
@@ -7,33 +7,17 @@ import type {Car} from '../../types/cars.types';
 import {useGetCarRouteQuery} from '../../api/CarsService';
 import {useLazyGetRouterQuery} from '../../api/RouterService';
 import MapSubstationMarker from '../MapSubstationMarker';
-import MapDriverMarker from '../MapDriverMarker';
+import {ApiService} from '../../api/ApiService';
+import {useAppDispatch} from '../../hooks/useAppDispatch';
 
 interface RouteProps {
     car: Car;
     driverCoordinates?: LngLat;
 }
 
-const timeout = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
 function Route({car, driverCoordinates}: RouteProps) {
     const [router, setRouter] = useState<RouterData | null>(null);
     const {data, isLoading} = useGetCarRouteQuery(car.car_id);
-
-    const [driverCoord, setDriverCoord] = useState(car.coordinates);
-
-    const go = useCallback(async () => {
-        if (router) {
-            for (let point of router.points) {
-                await timeout(25);
-                setDriverCoord(point);
-            }
-        }
-    }, [router]);
-
-    useEffect(() => {
-        go();
-    }, [router]);
 
     const [getRouter] = useLazyGetRouterQuery();
 
@@ -74,7 +58,6 @@ function Route({car, driverCoordinates}: RouteProps) {
         <>
             {router && (
                 <>
-                    <MapDriverMarker coordinates={driverCoord} />
                     <MapSubstationMarker color="blue" coordinates={data!.data.start_substation.coordinates} />
                     <MapSubstationMarker color="red" coordinates={data!.data.end_substation.coordinates} />
                     <YMapFeature geometry={routeFeatures!.remaining.geometry} style={routeFeatures!.remaining.style} />

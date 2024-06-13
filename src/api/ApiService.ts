@@ -8,5 +8,5 @@ export const ApiService = createApi({
         baseUrl: BASE_URL
     }),
     endpoints: () => ({}),
-    tagTypes: ['Substations', 'Bases', 'Cars']
+    tagTypes: ['Substations', 'Bases', 'Cars', 'Route']
 });

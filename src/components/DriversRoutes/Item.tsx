@@ -10,7 +10,7 @@ import StartAddress from './StartAddress';
 import EndAddress from './EndAddress';
 import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {useAppSelector} from '../../hooks/useAppSelector';
-import {setActiveCar} from '../../store/slices/vinaigretteSlice';
+import {setActiveCarId} from '../../store/slices/vinaigretteSlice';
 
 interface ItemProps {
     car: Car;
@@ -31,11 +31,11 @@ const translateOption = {
 function Item({car}: ItemProps) {
     const dispatch = useAppDispatch();
 
-    const {activeCar} = useAppSelector((state) => state.vinaigretteSlice);
+    const {activeCarId} = useAppSelector((state) => state.vinaigretteSlice);
 
     const onClickHandler = useCallback(
         (car: Car) => {
-            dispatch(setActiveCar(car));
+            dispatch(setActiveCarId(car.car_id));
         },
         [dispatch]
     );
@@ -43,7 +43,7 @@ function Item({car}: ItemProps) {
     return (
         <div
             onClick={() => onClickHandler(car)}
-            className={`flex cursor-pointer flex-col rounded-lg bg-white px-3 py-5 shadow ${activeCar?.car_id === car.car_id && 'shadow-active'}`}
+            className={`flex cursor-pointer flex-col rounded-lg bg-white px-3 py-5 shadow ${activeCarId === car.car_id && 'shadow-active'}`}
         >
             <div className="flex justify-between">
                 <div className="shrink-0 grow-0 basis-3/5">
