@@ -35,10 +35,11 @@ function Panel({className: externalStyles}: PanelProps) {
                         onClick={onClickHandler}
                     />
                 )}
-
-                <Link to={'/add-substation'}>
-                    <CommonButton text={'Добавить подстанцию'} />
-                </Link>
+                {panelActiveType === 'substations' && (
+                    <Link to={'/add-substation'}>
+                        <CommonButton text={'Добавить подстанцию'} />
+                    </Link>
+                )}
             </div>
             {panelActiveType === 'substations' ? <List /> : <BasesList />}
         </div>

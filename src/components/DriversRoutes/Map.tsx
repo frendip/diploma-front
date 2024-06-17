@@ -1,13 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import MapLayout from '../MapLayout';
 
-import Route from './MapRoute';
-import {useAppSelector} from '../../hooks/useAppSelector';
-import MapDriverMarker from '../MapDriverMarker';
-import {useGetCarsQuery} from '../../api/CarsService';
-import {Car} from '../../types/cars.types';
 import {ApiService} from '../../api/ApiService';
+import {useGetCarsQuery} from '../../api/CarsService';
 import {useAppDispatch} from '../../hooks/useAppDispatch';
+import {useAppSelector} from '../../hooks/useAppSelector';
+import {Car} from '../../types/cars.types';
+import MapDriverMarker from '../MapDriverMarker';
+import Route from './MapRoute';
 
 interface MapProps {
     className?: string;
@@ -35,7 +35,6 @@ function Map({className: externalStyles}: MapProps) {
 
     useEffect(() => {
         dispatch(ApiService.util.invalidateTags(['Route']));
-        console.log(activeCar?.status);
     }, [activeCar?.status]);
 
     return (

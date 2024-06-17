@@ -1,14 +1,12 @@
-import React, {useMemo, useEffect, useState} from 'react';
-import {YMapFeature} from '../../lib/ymaps';
-import {findNearestIndex, getFeatureGeometry, getFeatureCoordinates, getFeatureStyle} from './utils';
-import type {RouterData} from '../../types/map.types';
-import type {LngLat} from '../../lib/ymaps';
-import type {Car} from '../../types/cars.types';
+import {useEffect, useMemo, useState} from 'react';
 import {useGetCarRouteQuery} from '../../api/CarsService';
 import {useLazyGetRouterQuery} from '../../api/RouterService';
+import type {LngLat} from '../../lib/ymaps';
+import {YMapFeature} from '../../lib/ymaps';
+import type {Car} from '../../types/cars.types';
+import type {RouterData} from '../../types/map.types';
 import MapSubstationMarker from '../MapSubstationMarker';
-import {ApiService} from '../../api/ApiService';
-import {useAppDispatch} from '../../hooks/useAppDispatch';
+import {findNearestIndex, getFeatureCoordinates, getFeatureGeometry, getFeatureStyle} from './utils';
 
 interface RouteProps {
     car: Car;

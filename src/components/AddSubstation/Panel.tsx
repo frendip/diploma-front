@@ -15,7 +15,6 @@ function Panel({className: externalStyles, coordinates}: PanelProps) {
     const {
         register,
         handleSubmit,
-        watch,
         formState: {errors},
         setValue
     } = useForm<AddSubstation>({

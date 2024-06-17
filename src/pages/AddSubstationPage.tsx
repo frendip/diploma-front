@@ -1,8 +1,8 @@
 import {useCallback, useState} from 'react';
+import Map from '../components/AddSubstation/Map';
 import Panel from '../components/AddSubstation/Panel';
-import MapLayout, {DEFAULT_LOCATION} from '../components/MapLayout';
-import MapSubstationMarker from '../components/MapSubstationMarker';
-import {BehaviorMapEventHandler, LngLat, MapEventUpdateHandler, YMapListener, YMapLocation} from '../lib/ymaps';
+import {DEFAULT_LOCATION} from '../components/MapLayout';
+import {BehaviorMapEventHandler, LngLat, MapEventUpdateHandler, YMapLocation} from '../lib/ymaps';
 
 function AddSubstationPage() {
     const [location, setLocation] = useState<YMapLocation>(DEFAULT_LOCATION as YMapLocation);
@@ -20,12 +20,7 @@ function AddSubstationPage() {
     return (
         <>
             <Panel className="absolute bottom-0 left-0 z-50 w-add-substation-panel" coordinates={centerCoordinates} />
-            <div className="absolute bottom-0 left-0 right-0 top-0">
-                <MapLayout>
-                    <YMapListener onUpdate={onUpdateHandler} onActionEnd={onActionEndHandler} />
-                    <MapSubstationMarker color="green" coordinates={location.center}></MapSubstationMarker>
-                </MapLayout>
-            </div>
+            <Map onActionEndHandler={onActionEndHandler} onUpdateHandler={onUpdateHandler} location={location} />
         </>
     );
 }

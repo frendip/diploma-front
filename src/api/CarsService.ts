@@ -1,8 +1,8 @@
 import {io, Socket} from 'socket.io-client';
+import {LngLat} from '../lib/ymaps';
 import {Car, CarResp, CarRouteResp, CarsResp, RawCarRoute, RepairingSubstationResp} from '../types/cars.types';
 import {RawResp} from '../types/resp.types';
 import {ApiService} from './ApiService';
-import {LngLat} from '../lib/ymaps';
 const CARS_URl = '/cars';
 
 export const CarsApi = ApiService.injectEndpoints({
