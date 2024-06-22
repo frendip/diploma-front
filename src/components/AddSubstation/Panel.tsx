@@ -41,11 +41,19 @@ function Panel({className: externalStyles, coordinates}: PanelProps) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [coordinates[0], coordinates[1], getAddress]);
     return (
-        <div
-            className={`${externalStyles} flex flex-col items-center rounded-tr-2xl bg-white/85 px-11 pb-11 pt-6 shadow`}
-        >
-            <div className="text-base font-semibold">Добавление новой подстанции</div>
-            <div className="w-full pt-9">
+        <div className={`${externalStyles} flex flex-col items-center rounded-tr-2xl bg-white/85 pb-11 shadow`}>
+            <div className="flex w-full border-b">
+                <div className="basis-1/2 cursor-pointer bg-active py-3 text-center font-medium text-white">
+                    Новая подстанция
+                </div>
+                <div
+                    onClick={() => navigate('/add-car')}
+                    className="basis-1/2 cursor-pointer border-l py-3 text-center font-medium"
+                >
+                    Новая машина с ДГУ
+                </div>
+            </div>
+            <div className="w-full px-11 pt-14">
                 <form className="flex w-full flex-col items-center gap-y-7" onSubmit={handleSubmit(onSubmit)}>
                     <div className="w-full rounded-xl border border-black/15 bg-neutral-100 px-5 py-5">
                         <input
@@ -72,7 +80,7 @@ function Panel({className: externalStyles, coordinates}: PanelProps) {
                     </div>
 
                     <div className="pt-13">
-                        <CommonButton text="Создать" className="px-9 py-3" />
+                        <CommonButton text="Добавить" className="px-9 py-3" />
                     </div>
                 </form>
             </div>

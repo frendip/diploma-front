@@ -19,7 +19,10 @@ function AddSubstationPage() {
     }, []);
     return (
         <>
-            <Panel className="absolute bottom-0 left-0 z-50 w-add-substation-panel" coordinates={centerCoordinates} />
+            <Panel
+                className="absolute bottom-0 left-0 z-50 h-add-substation-panel w-add-substation-panel overflow-hidden"
+                coordinates={centerCoordinates}
+            />
             <Map onActionEndHandler={onActionEndHandler} onUpdateHandler={onUpdateHandler} location={location} />
         </>
     );

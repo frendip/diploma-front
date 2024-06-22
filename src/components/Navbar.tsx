@@ -35,8 +35,12 @@ function Navbar() {
                 <Link to="/add-substation">
                     <IconButton
                         size="large"
-                        isActive={pathname === '/add-substation'}
-                        IconComponent={pathname === '/add-substation' ? AddChapterWhiteIcon : AddChapterIcon}
+                        isActive={pathname === '/add-substation' || pathname === '/add-car'}
+                        IconComponent={
+                            pathname === '/add-substation' || pathname === '/add-car'
+                                ? AddChapterWhiteIcon
+                                : AddChapterIcon
+                        }
                     />
                 </Link>
             </div>
