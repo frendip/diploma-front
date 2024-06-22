@@ -1,7 +1,7 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState} from 'react';
 import {ReactComponent as TruckImage} from '../../assets/truckImage.svg';
-import {ReactComponent as PhoneIcon} from '../../assets/phone-icon.svg';
-import {ReactComponent as MessageIcon} from '../../assets/message-icon.svg';
+import {ReactComponent as InfoIcon} from '../../assets/info-icon.svg';
+import {ReactComponent as PenIcon} from '../../assets/pen-icon.svg';
 import {ReactComponent as TruckDriverIcon} from '../../assets/truck-driver-icon.svg';
 import IconButton from '../UI/IconButton';
 import {Car} from '../../types/cars.types';
@@ -11,6 +11,8 @@ import EndAddress from './EndAddress';
 import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {useAppSelector} from '../../hooks/useAppSelector';
 import {setActiveCarId} from '../../store/slices/vinaigretteSlice';
+import PopupContainer from '../UI/PopupContainer/PopupContainer';
+import DriverInfo from './DriverInfo';
 
 interface ItemProps {
     car: Car;
@@ -31,18 +33,24 @@ const translateOption = {
 function Item({car}: ItemProps) {
     const dispatch = useAppDispatch();
 
+    const [isActivePopup, setIsActivePopup] = useState(false);
+
     const {activeCarId} = useAppSelector((state) => state.vinaigretteSlice);
 
-    const onClickHandler = useCallback(
+    const onClickItemHandler = useCallback(
         (car: Car) => {
             dispatch(setActiveCarId(car.car_id));
         },
         [dispatch]
     );
 
+    const onClickInfoHandler = useCallback(() => {
+        setIsActivePopup((prev) => !prev);
+    }, []);
+
     return (
         <div
-            onClick={() => onClickHandler(car)}
+            onClick={() => onClickItemHandler(car)}
             className={`flex cursor-pointer flex-col rounded-lg bg-white px-3 py-5 shadow ${activeCarId === car.car_id && 'shadow-active'}`}
         >
             <div className="flex justify-between">
@@ -75,8 +83,11 @@ function Item({car}: ItemProps) {
                     <div className="font-medium">{car.driver_name}</div>
                 </div>
                 <div className="flex gap-x-2">
-                    <IconButton variant="secondary" IconComponent={PhoneIcon} />
-                    <IconButton variant="secondary" IconComponent={MessageIcon} />
+                    <IconButton variant="secondary" IconComponent={PenIcon} />
+                    <IconButton variant="secondary" IconComponent={InfoIcon} onClick={onClickInfoHandler} />
+                    <PopupContainer popupActive={isActivePopup} setPopupActive={setIsActivePopup}>
+                        <DriverInfo car={car} />
+                    </PopupContainer>
                 </div>
             </div>
         </div>
