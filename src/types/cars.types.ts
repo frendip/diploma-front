@@ -1,4 +1,5 @@
 import type {LngLat} from '../lib/ymaps';
+import {RouterData} from './map.types';
 import type {RawResp} from './resp.types';
 import type {Substation} from './substations.types';
 
@@ -25,6 +26,7 @@ export interface CarRoute {
     car_id: number;
     start_substation: Substation;
     end_substation: Substation;
+    route: RouterData;
 }
 
 export interface RawCarRoute {

@@ -1,7 +1,5 @@
 import {useEffect, useMemo, useState} from 'react';
 import {useGetCarRouteQuery} from '../../api/CarsService';
-import {useLazyGetRouterQuery} from '../../api/RouterService';
-import type {LngLat} from '../../lib/ymaps';
 import {YMapFeature} from '../../lib/ymaps';
 import type {Car} from '../../types/cars.types';
 import type {RouterData} from '../../types/map.types';
@@ -10,34 +8,21 @@ import {findNearestIndex, getFeatureCoordinates, getFeatureGeometry, getFeatureS
 
 interface RouteProps {
     car: Car;
-    driverCoordinates?: LngLat;
 }
 
-function Route({car, driverCoordinates}: RouteProps) {
+function Route({car}: RouteProps) {
     const [router, setRouter] = useState<RouterData | null>(null);
     const {data, isLoading} = useGetCarRouteQuery(car.car_id);
 
-    const [getRouter] = useLazyGetRouterQuery();
-
     useEffect(() => {
-        const fetchRouter = async () => {
-            if (data) {
-                const startPoint = data.data.start_substation.coordinates;
-                const endPoint = data.data.end_substation.coordinates;
-
-                const routerData = await getRouter({
-                    waypoints: [startPoint, endPoint]
-                }).unwrap();
-                setRouter(routerData.data);
-            }
-        };
-
-        fetchRouter();
-    }, [data, getRouter]);
+        if (data) {
+            setRouter(data.data.route);
+        }
+    }, [data]);
 
     const routeFeatures = useMemo(() => {
         if (router) {
-            const nearIndexToDriver = driverCoordinates ? findNearestIndex(router.points, driverCoordinates) : 0;
+            const nearIndexToDriver = car.coordinates ? findNearestIndex(router.points, car.coordinates) : 0;
 
             return {
                 remaining: {
@@ -50,7 +35,7 @@ function Route({car, driverCoordinates}: RouteProps) {
                 }
             };
         }
-    }, [router, driverCoordinates]);
+    }, [router, car]);
 
     return (
         <>

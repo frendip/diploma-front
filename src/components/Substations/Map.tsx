@@ -44,9 +44,9 @@ function Map({className: externalStyles}: MapProps) {
                     (substation) => substation.substation_id === activeSubstationId
                 );
                 if (!activeSubstation) return;
-                setMapLocation({center: activeSubstation.coordinates, zoom: 12, duration: 300});
+                setMapLocation({center: activeSubstation.coordinates, zoom: 12});
             } else {
-                setMapLocation({...DEFAULT_LOCATION, duration: 300});
+                setMapLocation({...DEFAULT_LOCATION});
             }
         } else {
             if (!basesData) return;
@@ -56,9 +56,9 @@ function Map({className: externalStyles}: MapProps) {
                     (substation) => substation.substation_id === activeSubstationId
                 );
                 if (!activeSubstation) return;
-                setMapLocation({center: activeSubstation.coordinates, zoom: 12, duration: 300});
+                setMapLocation({center: activeSubstation.coordinates, zoom: 12});
             } else {
-                setMapLocation({...DEFAULT_LOCATION, duration: 300});
+                setMapLocation({...DEFAULT_LOCATION});
             }
         }
 

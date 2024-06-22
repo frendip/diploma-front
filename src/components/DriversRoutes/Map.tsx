@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import MapLayout from '../MapLayout';
+import MapLayout, {DEFAULT_LOCATION} from '../MapLayout';
 
 import {ApiService} from '../../api/ApiService';
 import {useGetCarsQuery} from '../../api/CarsService';
@@ -8,7 +8,9 @@ import {useAppSelector} from '../../hooks/useAppSelector';
 import {Car} from '../../types/cars.types';
 import MapDriverMarker from '../MapDriverMarker';
 import Route from './MapRoute';
+import {Margin} from '../../lib/ymaps';
 
+const MAP_MARGIN: Margin = [0, 100, 0, 0];
 interface MapProps {
     className?: string;
 }
@@ -39,7 +41,10 @@ function Map({className: externalStyles}: MapProps) {
 
     return (
         <div className={`${externalStyles}`}>
-            <MapLayout>
+            <MapLayout
+                location={activeCar ? {...DEFAULT_LOCATION, center: activeCar.coordinates, zoom: 14} : DEFAULT_LOCATION}
+                margin={MAP_MARGIN}
+            >
                 {activeCar && (
                     <>
                         {activeCar.status === 'delivered' && <Route car={activeCar} />}

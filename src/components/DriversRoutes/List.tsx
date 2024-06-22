@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import Item from './Item';
+import Search from '../UI/Search';
 import {useGetCarsQuery} from '../../api/CarsService';
 import {useAppDispatch} from '../../hooks/useAppDispatch';
 import {setActiveCarId} from '../../store/slices/vinaigretteSlice';
@@ -22,7 +23,10 @@ function List({className: externalStyles}: ListProps) {
 
     return (
         <div className={`${externalStyles} flex flex-col gap-y-4 overflow-auto bg-white/85 px-4 py-9`}>
-            {data?.data.map((car) => <Item car={car} key={car.car_id} />)}
+            <Search />
+            <div className="flex flex-col gap-y-4 overflow-auto">
+                {data?.data.map((car) => <Item car={car} key={car.car_id} />)}
+            </div>
         </div>
     );
 }
