@@ -15,6 +15,11 @@ module.exports = function override(config, env) {
             `promise new Promise((resolve) => {
               return ymaps3.ready.then(() => ymaps3.import('@yandex/ymaps3-markers@0.0.1').then(resolve));
                })`
+        ],
+        '@yandex/ymaps3/packages/clusterer': [
+            `promise new Promise((resolve) => {
+              return ymaps3.ready.then(() => ymaps3.import('@yandex/ymaps3-clusterer@0.0.1').then(resolve));
+               })`
         ]
     };
 

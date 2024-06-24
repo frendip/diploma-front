@@ -15,6 +15,7 @@ import * as ymaps3 from '@yandex/ymaps3';
 import {YMapLocation} from '@yandex/ymaps3/imperative/YMap';
 import type {Geometry} from '@yandex/ymaps3/imperative/YMapFeature/types';
 import * as YMapDefaultMarkerPrototype from '@yandex/ymaps3/packages/markers';
+import * as YMapClustererPrototype from '@yandex/ymaps3/packages/clusterer';
 import {reactify} from '@yandex/ymaps3/reactify';
 import React from 'react';
 import ReactDom from 'react-dom';
@@ -30,10 +31,14 @@ const {
     YMapFeature,
     YMapListener,
     YMapContainer,
-    YMapControl
+    YMapControl,
+    YMapLayer,
+    YMapFeatureDataSource
 } = reactified.module(ymaps3);
 
 const {YMapDefaultMarker} = reactified.module(YMapDefaultMarkerPrototype);
+const {YMapClusterer} = reactified.module(YMapClustererPrototype);
+const {clusterByGrid} = YMapClustererPrototype;
 
 export {
     YMap,
@@ -47,6 +52,10 @@ export {
     YMapFeature,
     YMapListener,
     YMapMarker,
+    YMapClusterer,
+    clusterByGrid,
+    YMapFeatureDataSource,
+    YMapLayer,
     reactified
 };
 
